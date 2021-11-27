@@ -1,24 +1,26 @@
-import { Schema, model } from require("mongoose");
+import mongoose from 'mongoose'
+
+const { Schema, model } = mongoose
 
 const projectSchema = new Schema({
   name: {
     type: String,
-    required: [true, "Project name must be provided"],
+    required: [true, 'Project name must be provided'],
   },
-  descrption: {
+  description: {
     type: String,
-    required: [true, "Project description must be provided"],
+    required: [true, 'Project description must be provided'],
   },
   issues: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Ticket",
+      ref: 'Ticket',
     },
   ],
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
-});
+})
 
-module.exports = model("Project", projectSchema);
+export default model('Project', projectSchema)
