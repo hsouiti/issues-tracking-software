@@ -1,27 +1,24 @@
-const http = require("http");
-const app = require("./app");
+import http from 'http'
+import app from './app.js'
 
 // config file
-const config = require("./config");
+import config from './config/index.js'
 
 // Db connect
-const connectDB = require("./db");
+import connectDB from './db/index.js'
 
-app.set("PORT", config.PORT);
-const server = http.createServer(app);
+app.set('PORT', config.PORT)
+const server = http.createServer(app)
 
-(async () => {
+;(async () => {
   try {
-    await connectDB(config.MONGO_URL);
+    await connectDB(config.MONGO_URL)
     server.listen(
-      app.get("PORT"),
-      console.log(`Server running at http://localhost:${app.get("PORT")}`)
-    );
+      app.get('PORT'),
+      console.log(`Server running at http://localhost:${app.get('PORT')}`)
+    )
   } catch (error) {
-    console.log("Failed to connect to DB", error.message);
-    process.exit(1);
+    console.log('Failed to connect to DB', error.message)
+    process.exit(1)
   }
-})();
-
-
-
+})()
