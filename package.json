@@ -1,0 +1,11 @@
+{
+  "name": "issues-tracking-software",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hsouiti/issues-tracking-software.git",
+  "author": "Hassan <h.souiti@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "cd backend && yarn start"
+  }
+}
