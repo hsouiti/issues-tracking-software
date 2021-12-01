@@ -1,13 +1,23 @@
 import Project from '../models/projects.js'
 import mongoose from 'mongoose'
+
+
 const { ObjectId } = mongoose.Types
 
 // get all the projects
 // TODO: Limit && sort projects
+/*
+  Sorting by created date
+
+*/
 export const getAllProjects = async (req, res) => {
-  const projects = await Project.find({})
+  const sotrtableFields = ['createdAt', 'name']
+  console.log(req.query);
+
+  const projects = await Project.find({}).sort({ createdAt: 'desc'})
   res.status(201).json({ projects })
 }
+
 
 // get a single project
 export const getProject = async (req, res) => {
@@ -26,12 +36,16 @@ export const getProject = async (req, res) => {
   res.status(200).json({ project })
 }
 
+
+
 // create project
 export const createProject = async (req, res) => {
-  console.log(req.body)
   const project = await Project.create(req.body)
   res.status(200).json({ project })
 }
+
+
+
 
 // update project
 export const updateProject = async (req, res) => {
@@ -41,10 +55,11 @@ export const updateProject = async (req, res) => {
     return res.status(404).json({ msg: `${projectID}: Invalid ID format` })
   }
 
-  const project = await Project.findOneAndUpdate({ _id: projectID }, req.body, {
-    new: true,
-    runValidators: true,
-  })
+  const project = await Project.findOneAndUpdate(
+    { _id: projectID },
+    req.body, 
+    { new: true, runValidators: true,}
+  )
 
   if (!project) {
     return res.status(404).json({ msg: `No Project with id: ${projectID}` })
@@ -53,8 +68,9 @@ export const updateProject = async (req, res) => {
   res.status(202).json({ project })
 }
 
-// delete project
 
+
+// delete project
 export const deleteProject = async (req, res) => {
   const { id: projectID } = req.params
 
