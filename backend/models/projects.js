@@ -11,12 +11,6 @@ const projectSchema = new Schema({
     type: String,
     required: [true, 'Project description must be provided'],
   },
-  issues: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Ticket',
-    },
-  ],
   createdAt: {
     type: Date,
     default: Date.now,

@@ -10,6 +10,7 @@ import {
 } from '../controllers/projects.js'
 
 projectsRouter.route('/').get(getAllProjects).post(createProject)
+
 projectsRouter
   .route('/:id')
   .get(getProject)
