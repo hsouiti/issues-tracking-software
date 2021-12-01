@@ -10,7 +10,7 @@ const { ObjectId } = mongoose.Types
 */
 export const getAllUsers = async (req, res) => {
   const users = await User.find({}).sort({ createdAt: 'desc' })
-  res.status(201).json({ users })
+  res.status(201).json({ total: users.length, users })
 }
 
 // get a single user
