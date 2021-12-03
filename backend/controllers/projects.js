@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import asyncWrapper from '../middlewares/async.js'
 
 import APIError from '../errors/APIError.js'
+import statusCodes from '../errors/statusCodes.js'
 
 const { ObjectId } = mongoose.Types
 
@@ -12,13 +13,15 @@ const { ObjectId } = mongoose.Types
   Sorting by created date
 */
 
-export const getAllProjects = asyncWrapper(async (req, res, next) => {
-  const projects = await Project.find({}).sort({ createdAt: 'desc' })
-  res.status(201).json({ total: projects.length, projects })
-})
+export const getAllProjects = async (req, res, next) => {
+  const projects = await Projec.find({}).sort({ createdAt: 'desc' })
+  res
+    .status(statusCodes.OK)
+    .json({ status: 'success', total: projects.length, projects })
+}
 
 // get a single project
-export const getProject = asyncWrapper(async (req, res, next) => {
+export const getProject = async (req, res, next) => {
   const { id: projectID } = req.params
 
   if (!ObjectId.isValid(projectID)) {
@@ -31,13 +34,13 @@ export const getProject = asyncWrapper(async (req, res, next) => {
     return next(APIError.HTTP400Error(`No Project with id: ${projectID}`))
   }
 
-  res.status(200).json({ project })
-})
+  res.status(statusCodes.OK).json({ project })
+}
 
 // create project
 export const createProject = async (req, res) => {
   const project = await Project.create(req.body)
-  res.status(200).json({ project })
+  res.status(statusCodes.CREATED).json({ project })
 }
 
 // update project

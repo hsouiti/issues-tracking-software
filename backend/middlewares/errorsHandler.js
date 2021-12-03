@@ -8,6 +8,7 @@ const errorsHanlder = (err, req, res, next) => {
   }
 
   return res.status(showError.statusCode).json({
+    status: 'error',
     statusCode: showError.statusCode,
     message: showError.message,
   })
