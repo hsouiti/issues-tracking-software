@@ -18,7 +18,7 @@ const server = http.createServer(app)
       console.log(`Server running at http://localhost:${app.get('PORT')}`)
     )
   } catch (error) {
-    console.log('Failed to connect to DB', error.message)
-    process.exit(1)
+    server.close(() => console.log('Failed to connect to DB', error.message))
+    process.exit1()
   }
 })()
