@@ -14,10 +14,10 @@ const { ObjectId } = mongoose.Types
 */
 
 export const getAllProjects = async (req, res, next) => {
-  const projects = await Projec.find({}).sort({ createdAt: 'desc' })
+  const projects = await Project.find({}).sort({ createdAt: 'desc' })
   res
     .status(statusCodes.OK)
-    .json({ status: 'success', total: projects.length, projects })
+    .json({ status: 'success', total: projects.length, data: projects })
 }
 
 // get a single project
@@ -34,13 +34,13 @@ export const getProject = async (req, res, next) => {
     return next(APIError.HTTP400Error(`No Project with id: ${projectID}`))
   }
 
-  res.status(statusCodes.OK).json({ project })
+  res.status(statusCodes.OK).json({ status: 'success', data: project })
 }
 
 // create project
 export const createProject = async (req, res) => {
   const project = await Project.create(req.body)
-  res.status(statusCodes.CREATED).json({ project })
+  res.status(statusCodes.CREATED).json({ status: 'success', data: project })
 }
 
 // update project
@@ -60,7 +60,7 @@ export const updateProject = async (req, res) => {
     return next(APIError.HTTP400Error(`No Project with id: ${projectID}`))
   }
 
-  res.status(202).json({ project })
+  res.status(202).json({ status: 'success', data: project })
 }
 
 // delete project
@@ -77,5 +77,5 @@ export const deleteProject = async (req, res) => {
     return next(APIError.HTTP400Error(`${projectID}: Invalid ID format`))
   }
 
-  res.status(202).json({ project })
+  res.status(202).json({ status: 'success', data: project })
 }

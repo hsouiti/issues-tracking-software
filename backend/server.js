@@ -19,6 +19,6 @@ const server = http.createServer(app)
     )
   } catch (error) {
     server.close(() => console.log('Failed to connect to DB', error.message))
-    process.exit1()
+    process.exit(1)
   }
 })()
