@@ -1,5 +1,6 @@
 import express from 'express'
-const usersRouter = express.Router()
+import asyncWrapper from '../middlewares/async.js';
+const usersRouter = express.Router();
 
 import {
   getAllUsers,
@@ -7,10 +8,17 @@ import {
   updateUser,
   getUser,
   deleteUser,
-} from '../controllers/users.js'
+} from '../controllers/users.js';
 
-usersRouter.route('/').get(getAllUsers).post(createUser)
+usersRouter
+  .route('/')
+  .get(asyncWrapper(getAllUsers))
+  .post(asyncWrapper(createUser));
 
-usersRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
+usersRouter
+  .route('/:id')
+  .get(asyncWrapper(getUser))
+  .patch(asyncWrapper(updateUser))
+  .delete(asyncWrapper(deleteUser));
 
 export default usersRouter
