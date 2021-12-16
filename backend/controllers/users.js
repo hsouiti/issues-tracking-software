@@ -1,9 +1,9 @@
 import User from '../models/users.js'
 import mongoose from 'mongoose'
 import APIError from '../errors/APIError.js'
-import statusCodes from '../errors/statusCodes.js'
+import HttpStatusCodes from '../errors/statusCodes.js';
 
-const { ObjectId } = mongoose.Types
+const { ObjectId } = mongoose.Types;
 
 // get all the users
 // TODO: Limit && sort users
@@ -11,9 +11,9 @@ const { ObjectId } = mongoose.Types
 
 */
 export const getAllUsers = async (req, res, next) => {
-  const users = await User.find({}).sort({ createdAt: 'desc' })
-  res.status(statusCodes.OK).json({ total: users.length, users })
-}
+  const users = await User.find({}).sort({ createdAt: 'desc' });
+  res.status(HttpStatusCodes.OK).json({ total: users.length, users });
+};
 
 // get a single user
 export const getUser = async (req, res, next) => {
@@ -25,16 +25,16 @@ export const getUser = async (req, res, next) => {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
   }
 
-  res.status(statusCodes.OK).json({ user });
+  res.status(HttpStatusCodes.OK).json({ user });
 };
 
 // create user
 export const createUser = async (req, res, next) => {
   const user = await User.create(req.body);
-  res.status(statusCodes.CREATED).json({ user });
+  res.status(HttpStatusCodes.CREATED).json({ user });
 };
 
-// update user
+// TODO: update user without password
 export const updateUser = async (req, res, next) => {
   const { id: userID } = req.params;
 
@@ -47,8 +47,10 @@ export const updateUser = async (req, res, next) => {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
   }
 
-  res.status(statusCodes.ACCEPTED).json({ user });
+  res.status(HttpStatusCodes.ACCEPTED).json({ user });
 };
+
+// TODO: update password
 
 // delete user
 export const deleteUser = async (req, res, next) => {
@@ -60,5 +62,5 @@ export const deleteUser = async (req, res, next) => {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
   }
 
-  res.status(statusCodes.ACCEPTED).json({ user });
+  res.status(HttpStatusCodes.ACCEPTED).json({ user });
 };
