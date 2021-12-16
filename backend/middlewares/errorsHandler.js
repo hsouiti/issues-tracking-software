@@ -1,7 +1,7 @@
-import HttpStatusCodes from '../errors/statusCodes.js'
+import HttpStatusCodes from '../errors/statusCodes.js';
 
 const errorsHanlder = (err, req, res, next) => {
-  //  console.log(err);
+  // console.log(err);
 
   let showError = {
     statusCode: err.statusCode || HttpStatusCodes.INTERNAL_SERVER_ERROR,
@@ -38,6 +38,6 @@ const errorsHanlder = (err, req, res, next) => {
     statusCode: showError.statusCode,
     message: showError.message,
   });
-}
+};
 
-export default errorsHanlder
+export default errorsHanlder;
