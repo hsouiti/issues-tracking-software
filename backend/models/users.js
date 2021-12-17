@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { roles } from '../helpers/constants.js';
 
 const { Schema, model } = mongoose;
 
@@ -28,7 +29,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Role must be provided'],
       enum: {
-        values: ['admin', 'project manager', 'developer', 'submitter'],
+        values: Object.values(roles),
         message: `{VALUE} is not supported`,
       },
       default: 'developer',
@@ -39,35 +40,14 @@ const userSchema = new Schema(
 
 // hash the password
 userSchema.pre('save', async function () {
-  console.log('herre');
   if (!this.isModified('password')) return;
-  console.log('yyyyyyyyyy');
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
 // compare password
-userSchema.methods.comparePassord = async function (entredPassword) {
+userSchema.methods.comparePassword = async function (entredPassword) {
   return await bcrypt.compare(entredPassword, this.password);
-};
-
-// create to token method
-userSchema.methods.createToken = async function () {
-  return jwt.sign(
-    {
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
-      payload: '',
-    },
-    procee.env.JWT_SECRET
-  );
-
-  jwt.sign(
-    {
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
-      data: 'foobar',
-    },
-    'secret'
-  );
 };
 
 
