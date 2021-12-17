@@ -1,7 +1,7 @@
 import HttpStatusCodes from '../errors/statusCodes.js';
 
 const errorsHanlder = (err, req, res, next) => {
-  // console.log(err);
+  //console.log(err);
 
   let showError = {
     statusCode: err.statusCode || HttpStatusCodes.INTERNAL_SERVER_ERROR,
