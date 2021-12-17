@@ -17,4 +17,8 @@ export default class APIError extends Error {
   static Unauthorized(msg) {
     return new APIError(HttpStatusCode.UNAUTHORIZED, msg);
   }
+
+  static Forbidden(msg) {
+    return new APIError(HttpStatusCode.FORBIDDEN, msg);
+  }
 }
