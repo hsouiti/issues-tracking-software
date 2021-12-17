@@ -22,9 +22,9 @@ const errorsHanlder = (err, req, res, next) => {
   // Duplicate Key (unique)
   if (err.code && err.code === 11000) {
     showError.statusCode = HttpStatusCodes.BAD_REQUEST;
-    showError.message = `Duplicate value for ${Object.values(
+    showError.message = `${Object.values(
       err.keyValue
-    )} field, choose another value`;
+    )} is already exist, please choose another one`;
   }
 
   // CastError

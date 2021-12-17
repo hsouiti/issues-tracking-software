@@ -13,4 +13,8 @@ export default class APIError extends Error {
   static HTTP400Error(msg) {
     return new APIError(HttpStatusCode.NOT_FOUND, msg);
   }
+
+  static Unauthorized(msg) {
+    return new APIError(HttpStatusCode.UNAUTHORIZED, msg);
+  }
 }
