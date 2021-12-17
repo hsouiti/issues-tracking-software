@@ -1,13 +1,13 @@
 import jwt from 'jsonwebtoken';
 
-// generate Token
+// generate Token payload
 export const generateTokenPayload = (user) => {
   return { userId: user._id, role: user.role };
 };
 
 // generateJWT
 export const generateJWT = (payload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '10s' });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
 // verify token
@@ -28,6 +28,12 @@ export const tokenToCookiesRes = async (res, userToken) => {
 
   await res.cookie('accessToken', accessToken, options);
 };
+
+
+// roles & permissions
+export const authRole = (...roles) => {
+  return 
+}
 
 /* *********************************
 // roles & permissions

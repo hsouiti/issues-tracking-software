@@ -32,7 +32,7 @@ const userSchema = new Schema(
         values: Object.values(roles),
         message: `{VALUE} is not supported`,
       },
-      default: 'developer',
+      default: 'submitter',
     },
   },
   { timestamps: true }

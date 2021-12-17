@@ -9,11 +9,13 @@ import {
   getUser,
   deleteUser,
 } from '../controllers/users.js';
+import isAuthenticated from '../middlewares/isAuthanticated.js';
+import isAuthorized from '../middlewares/isAuthorized.js';
 
 usersRouter
   .route('/')
-  .get(asyncWrapper(getAllUsers))
-  .post(asyncWrapper(createUser));
+  .get(isAuthenticated, asyncWrapper(getAllUsers))
+  .post([isAuthenticated, isAuthorized], asyncWrapper(createUser));
 
 usersRouter
   .route('/:id')

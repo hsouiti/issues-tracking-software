@@ -11,7 +11,9 @@ const { ObjectId } = mongoose.Types;
 
 */
 export const getAllUsers = async (req, res, next) => {
-  const users = await User.find({}).sort({ createdAt: 'desc' });
+  const users = await User.find({})
+    .sort({ createdAt: 'desc' })
+    .select('-password');
   res.status(HttpStatusCodes.OK).json({ total: users.length, users });
 };
 
@@ -19,7 +21,7 @@ export const getAllUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   const { id: userID } = req.params;
 
-  const user = await User.findOne({ _id: userID });
+  const user = await User.findOne({ _id: userID }).select('-password');
 
   if (!user) {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
