@@ -1,9 +1,8 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import express from 'express';
 
 import cookieParser from 'cookie-parser';
+
+import config from './config/index.js';
 
 import errorsHandler from './middlewares/errorsHandler.js';
 import notFound from './middlewares/notFound.js';
@@ -17,7 +16,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser(process.env.JWT_SECRET));
+app.use(cookieParser(config.PARSER_SECRET));
 
 // Routes
 app.get('/', (req, res) => res.send('Welcome'));

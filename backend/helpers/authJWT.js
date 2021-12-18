@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import config from '../config/index.js';
 
 // generate Token payload
 export const generateTokenPayload = (user) => {
@@ -7,12 +8,14 @@ export const generateTokenPayload = (user) => {
 
 // generateJWT
 export const generateJWT = (payload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+  return jwt.sign(payload, config.JWT_TOKEN_SECRET, {
+    expiresIn: config.JWT_TOKEN_TIME,
+  });
 };
 
 // verify token
 export const isValidToken = (token) => {
-  return jwt.verify(token, process.env.JWT_SECRET);
+  return jwt.verify(token, config.JWT_TOKEN_SECRET);
 };
 
 // save the token in the cookies & attach it to response
@@ -22,7 +25,7 @@ export const tokenToCookiesRes = async (res, userToken) => {
   let options = {
     httpOnly: true,
     maxAge: ageToken,
-    secure: process.env.NODE_ENV === 'production',
+    secure: config.NODE_ENV === 'production',
     signed: true,
   };
 
