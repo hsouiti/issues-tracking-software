@@ -9,7 +9,7 @@ const ticketSchema = new Schema(
     },
     description: {
       type: String,
-      required: [true, 'Description must be provided'],
+      required: [true, 'Ticket description must be provided'],
     },
     priority: {
       type: String,
@@ -31,26 +31,26 @@ const ticketSchema = new Schema(
     },
     closedAt: Date,
 
-    // ????
     createdByUserID: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'User must be provided'],
-      // TODO: Just users with role that can create & submit tickets
-    },
-    closedByUserID: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'User must be provided'],
-      // TODO: Just users with role that can close and resolve tickets
+      required: [true, 'Creator of ticket must be provided'],
     },
     relatedProjectID: {
       type: Schema.Types.ObjectId,
       ref: 'Project',
-      required: [true, 'Project must be provided'],
+      required: [true, 'Project related must be provided'],
+    },
+    closedByUserID: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    assignedToUserID: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
   },
   { timestamps: true }
 )
 
-module.exports = model('Ticket', ticketSchema)
+export default model('Ticket', ticketSchema)

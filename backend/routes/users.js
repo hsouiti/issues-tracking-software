@@ -15,12 +15,18 @@ import isAuthorized from '../middlewares/isAuthorized.js';
 usersRouter
   .route('/')
   .get(isAuthenticated, asyncWrapper(getAllUsers))
-  .post([isAuthenticated, isAuthorized], asyncWrapper(createUser));
+//.post([isAuthenticated, isAuthorized], asyncWrapper(createUser));
 
 usersRouter
-  .route('/:id')
-  .get(asyncWrapper(getUser))
-  .patch(asyncWrapper(updateUser))
-  .delete(asyncWrapper(deleteUser));
+  .route('/:id') // access granted for admins and for the current user
+  .get(isAuthenticated, asyncWrapper(getUser))
+  .patch(
+    [isAuthenticated, isAuthorized('admin', 'manager')],
+    asyncWrapper(updateUser)
+  )
+  .delete(
+    [isAuthenticated, isAuthorized('admin', 'manager')],
+    asyncWrapper(deleteUser)
+  )
 
 export default usersRouter
