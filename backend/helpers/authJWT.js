@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/index.js';
 
+
 // generate Token payload
 export const generateTokenPayload = (user) => {
   return { userId: user._id, role: user.role };
@@ -33,20 +34,3 @@ export const tokenToCookiesRes = async (res, userToken) => {
 };
 
 
-// roles & permissions
-export const authRole = (...roles) => {
-  return 
-}
-
-/* *********************************
-// roles & permissions
-// authorize the routes for this user or not
-/* function authRole(role) {
-  return (req, res, next) => {
-    console.log(role, req.user.role);
-    if (req.user.role !== role) {
-      return res.status(401).send('Not Allowed');
-    }
-    next();
-  };
-} */
