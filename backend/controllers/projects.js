@@ -11,6 +11,7 @@ import HttpStatusCodes from '../errors/statusCodes.js'
 
 export const getAllProjects = async (req, res, next) => {
   const projects = await Project.find({}).sort({ createdAt: 'desc' })
+
   res.status(HttpStatusCodes.OK).json({
     status: 'success',
     data: {
@@ -32,6 +33,7 @@ export const getProject = async (req, res, next) => {
 
   res.status(HttpStatusCodes.OK).json({ status: 'success', data: project })
 }
+
 
 // create project
 export const createProject = async (req, res) => {

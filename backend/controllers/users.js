@@ -3,8 +3,6 @@ import mongoose from 'mongoose'
 import APIError from '../errors/APIError.js'
 import HttpStatusCodes from '../errors/statusCodes.js'
 
-const { ObjectId } = mongoose.Types
-
 // get all the users
 // TODO: Limit && sort users
 /*
@@ -15,6 +13,7 @@ export const getAllUsers = async (req, res, next) => {
     .sort({ createdAt: 'desc' })
     .select('-password')
 
+
   res.status(HttpStatusCodes.OK).json({
     status: 'success',
     data: {
@@ -23,6 +22,7 @@ export const getAllUsers = async (req, res, next) => {
     },
   })
 }
+
 
 // get a single user
 export const getUser = async (req, res, next) => {
