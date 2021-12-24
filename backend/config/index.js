@@ -9,6 +9,7 @@ const config = {
   JWT_TOKEN_SECRET: process.env.JWT_TOKEN_SECRET,
   JWT_TOKEN_TIME: process.env.JWT_TOKEN_TIME,
   PARSER_SECRET: process.env.PARSER_SECRET,
-};
+  STATIC_FOLDER: process.env.STATIC_FOLDER,
+}
 
 export default config
