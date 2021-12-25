@@ -2,6 +2,4 @@
 /frontend/node_modules
 /node_modules
 .env
-features.md
-database.md
-brief.md
+/guide
