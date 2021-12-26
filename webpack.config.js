@@ -1,13 +1,13 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { root } = require('postcss')
 
 let mode = 'development'
 if (process.env.NODE_ENV) {
   mode = process.env.NODE_ENV.trim()
 }
 const isProduction = process.env.NODE_ENV === 'production'
+
 module.exports = {
   mode,
   entry: path.resolve(__dirname, 'frontend/src/js', 'app.js'),
@@ -20,6 +20,7 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'frontend/src', 'index.html'),
+      inject: 'body',
     }),
   ],
 
@@ -59,8 +60,8 @@ module.exports = {
     hot: true,
     compress: true,
     open: true,
-    proxy: {
-      '/api': 'http://localhost:3500',
-    },
+    port: 3000,
   },
 }
+
+

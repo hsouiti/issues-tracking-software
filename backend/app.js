@@ -1,7 +1,7 @@
 import express from 'express';
 import path  from 'path'
 import cookieParser from 'cookie-parser'
-
+import cors from 'cors'
 import config from './config/index.js'
 
 import errorsHandler from './middlewares/errorsHandler.js'
@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser(config.PARSER_SECRET))
 app.use(express.static(path.join(__dirname, config.STATIC_FOLDER)))
+app.use(cors())
 
 
 // Routes
