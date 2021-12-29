@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode,
-  entry: path.resolve(__dirname, 'frontend/src/js', 'app.js'),
+  entry: path.resolve(__dirname, 'frontend/src/', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'frontend/public'),
     filename: 'main.js',

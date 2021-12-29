@@ -2,5 +2,13 @@ $mainColor: purple;
 
 body {
     background-color: $mainColor;
-    color: white;
+   *{
+       color: white;
+   } 
+}
+
+
+div { 
+    min-height: 100px;
+    border: 1px solid white;
 }

@@ -4,11 +4,15 @@ const API = 'tickets'
 
 class TicketUI {
   async renderTickets() {
-    const tickets = await getAllData()
+    const allTickets = await getAllData()
+    console.log('tickets', tickets)
+    const {
+      data: { tickets },
+    } = allTickets
     return `
     <div>
         ${tickets.map((ticket) => {
-          return <li>${ticket.title}</li>
+          return `<li>${ticket.title}</li>`
         })}
     </div>
     `

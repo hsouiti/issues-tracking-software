@@ -1,13 +1,15 @@
+const siteName = 'Tracky'
+
 class BaseView {
   constructor() {}
 
   setTitle(title) {
-    document.title = title
+    document.title = `${siteName} | ${title}`
   }
 
-  /*   async render() {
+  async render() {
     return ''
-  } */
+  }
 }
 
 export default BaseView

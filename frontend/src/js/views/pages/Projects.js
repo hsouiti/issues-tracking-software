@@ -1,16 +1,16 @@
 import BaseView from '../BaseView'
 
-class Signup extends BaseView {
+class Projects extends BaseView {
   constructor() {
     super()
-    this.setTitle('Signup')
+    this.setTitle('Projects')
   }
 
   async render() {
     return `
-      <h1>Signup</h1>
+      <h1>Projects</h1>
     `
   }
 }
 
-export default Signup
+export default Projects

@@ -1,11 +1,22 @@
 import '../styles/main.scss'
-import TicketUI from './api/Ticket'
-import Layout from './views/pages/Layout'
-// code splitting & lawy loading
+import Navbar from './views/components/navbar'
+import Router from './routes/Router'
 
-import Login from './views/pages/Login'
+const App = async () => {
+  const header = await document.getElementById('header')
+  header.innerHTML = await Navbar()
+  const navLinks = document.querySelector('.nav-links').children
+  ;[...navLinks].forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault()
+      history.pushState('', '', e.target.pathname)
+      Router()
+    })
+  })
+  Router()
+}
 
-const view = new TicketUI()
-document.getElementById('root').innerHTML = await view.renderTickets()
+export default App
+
 
 
