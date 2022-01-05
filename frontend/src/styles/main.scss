@@ -1,14 +1,90 @@
-$mainColor: purple;
+@charset "UTF-8";
 
-body {
-    background-color: $mainColor;
-   *{
-       color: white;
-   } 
+// Configuration and helpers
+@use 'abstracts/variables';
+@use 'abstracts/functions';
+@use 'abstracts/mixins';
+@use 'abstracts/placeholders';
+
+// Vendors
+ @use 'vendors/normalize'; 
+
+ // Base styles
+@use 'base/typography';
+@use 'base/base';
+
+// Layouts
+@use 'layouts/header';
+
+/*
+
+@charset "UTF-8";
+
+// 1. Configuration and helpers
+@import
+  'abstracts/variables',
+  'abstracts/functions',
+  'abstracts/mixins';
+
+// 2. Vendors
+@import
+  'vendors/normalize';
+
+// 3. Base stuff
+@import
+  'base/base',
+  'base/fonts',
+  'base/typography',
+  'base/helpers';
+
+// 4. Layout-related sections
+@import
+  'layout/header',
+  'layout/footer';
+
+// 5. Components
+@import
+  'components/button';
+
+// 6. Page-specific styles
+@import
+  'pages/home';
+
+// 7. Themes
+@import
+  'themes/default';
+
+
+*/
+
+
+ body {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  * { 
+    color: white;
+  }
 }
 
-
-div { 
-    min-height: 100px;
-    border: 1px solid white;
+.container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  & > * {
+    border: 1px solid yellow;
+  }
 }
+
+#main {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+} 

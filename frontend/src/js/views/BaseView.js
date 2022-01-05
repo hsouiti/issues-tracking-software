@@ -1,8 +1,7 @@
 const siteName = 'Tracky'
 
 class BaseView {
-  constructor() {}
-
+  // change the title in every page
   setTitle(title) {
     document.title = `${siteName} | ${title}`
   }

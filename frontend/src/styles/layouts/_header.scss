@@ -1,0 +1,11 @@
+header {
+  padding: 15px 0;
+  nav {
+    ul.nav-links {
+      display: flex;
+      list-style-type: none;
+      justify-content: space-evenly;
+      text-transform: uppercase;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import '../styles/main.scss'
-import Navbar from './views/components/navbar'
+import Navbar from './views/layouts/navbar'
 import Router from './routes/Router'
 
 const App = async () => {
