@@ -1,7 +1,11 @@
 header {
   padding: 15px 0;
+  background-color: chartreuse;
+  .logo {
+
+  }
   nav {
-    ul.nav-links {
+    ul.nav__links {
       display: flex;
       list-style-type: none;
       justify-content: space-evenly;

@@ -6,7 +6,8 @@ let mode = 'development'
 if (process.env.NODE_ENV) {
   mode = process.env.NODE_ENV.trim()
 }
-const isProduction = process.env.NODE_ENV === 'production'
+//const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = 'production'
 
 module.exports = {
   mode,
@@ -44,7 +45,7 @@ module.exports = {
         use: [
           isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader',
-          {
+           {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
