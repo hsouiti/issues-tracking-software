@@ -1,8 +1,8 @@
-import express from 'express';
-import path  from 'path'
+import express from 'express'
+import path from 'path'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import config from './config/index.js'
+import config from '../config/index.js'
 
 import errorsHandler from './middlewares/errorsHandler.js'
 import notFound from './middlewares/notFound.js'
@@ -22,15 +22,14 @@ app.use(cookieParser(config.PARSER_SECRET))
 app.use(express.static(path.join(__dirname, config.STATIC_FOLDER)))
 app.use(cors())
 
-
 // Routes
-app.use('/api/v1/projects', projectsRouter);
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/tickets', ticketsRouter);
+app.use('/api/v1/projects', projectsRouter)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/tickets', ticketsRouter)
 
 // Errors Handler
-app.use(notFound);
-app.use(errorsHandler);
+app.use(notFound)
+app.use(errorsHandler)
 
-export default app;
+export default app
