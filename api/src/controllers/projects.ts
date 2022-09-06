@@ -34,13 +34,13 @@ export const getProject = async (req, res, next) => {
 }
 
 // create project
-export const createProject = async (req, res) => {
+export const createProject = async (req, res, next) => {
   const project = await Project.create(req.body)
   res.status(HttpStatusCodes.CREATED).json({ status: 'success', data: project })
 }
 
 // update project
-export const updateProject = async (req, res) => {
+export const updateProject = async (req, res, next) => {
   const { id: projectID } = req.params
 
   const project = await Project.findOneAndUpdate({ _id: projectID }, req.body, {

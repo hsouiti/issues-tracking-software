@@ -1,5 +1,5 @@
 import HttpStatusCode from './statusCodes'
-import { ErrorType } from '../types'
+import { ErrorType } from '../interfaces'
 
 export default class APIError extends Error {
   statusCode: number

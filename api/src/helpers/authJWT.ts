@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { Response } from 'express'
-import { TokenInput, UserInput } from '../types'
+import { TokenInput, UserInput } from '../interfaces'
 
 import config from '../../config/index'
 
