@@ -7,7 +7,8 @@ import config from '../config/index'
 import connectDB from './db/index'
 
 app.set('PORT', config.PORT)
-const server = http.createServer(app)
+// eslint-disable-next-line prettier/prettier
+const server = http.createServer(app);
 
 void (async () => {
   try {

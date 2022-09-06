@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
-const connectDB = async (url: string): Promise<any> => await mongoose.connect(url)
+type asyncFunc = (url: string | undefined) => Promise<any>
+const connectDB: asyncFunc = async url => await mongoose.connect(url)
 
 export default connectDB
