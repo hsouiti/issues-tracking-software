@@ -1,6 +1,7 @@
-import HttpStatusCodes from '../errors/statusCodes.js'
+import HttpStatusCodes from '../errors/statusCodes'
+import { Request, Response } from 'express'
 
-const notFound = (req, res) =>
+const notFound = (req: Request, res: Response): unknown =>
   res.status(HttpStatusCodes.NOT_FOUND).json({
     status: 'error',
     statusCode: HttpStatusCodes.NOT_FOUND,

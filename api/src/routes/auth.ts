@@ -1,9 +1,9 @@
 import express from 'express'
-import asyncWrapper from '../middlewares/async.js'
+import asyncWrapper from '../middlewares/async'
 
 const authRouter = express.Router()
 
-import { register, login, logout } from '../controllers/auth.js'
+import { register, login, logout } from '../controllers/auth'
 
 authRouter.route('/register').post(asyncWrapper(register))
 

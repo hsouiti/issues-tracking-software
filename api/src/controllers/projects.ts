@@ -1,8 +1,7 @@
-import Project from '../models/projects.js'
+import APIError from '../errors/APIError'
+import HttpStatusCodes from '../errors/statusCodes'
 
-import APIError from '../errors/APIError.js'
-import HttpStatusCodes from '../errors/statusCodes.js'
-
+import Project from '../models/projects'
 // get all the projects
 // TODO: Limit && sort projects
 /*

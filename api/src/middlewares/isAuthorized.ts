@@ -1,4 +1,4 @@
-import APIError from '../errors/APIError.js'
+import APIError from '../errors/APIError'
 
 // TODO: for the roles developer & submitter
 //        check if he has the permissions to see (his profile)

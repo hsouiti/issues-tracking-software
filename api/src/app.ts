@@ -2,24 +2,24 @@ import express from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import config from '../config/index.js'
+import config from '../config/index'
 
-import errorsHandler from './middlewares/errorsHandler.js'
-import notFound from './middlewares/notFound.js'
+import errorsHandler from './middlewares/errorsHandler'
+import notFound from './middlewares/notFound'
 
-import projectsRouter from './routes/projects.js'
-import usersRouter from './routes/users.js'
-import ticketsRouter from './routes/tickets.js'
-import authRouter from './routes/auth.js'
+import projectsRouter from './routes/projects'
+import usersRouter from './routes/users'
+import ticketsRouter from './routes/tickets'
+import authRouter from './routes/auth'
 
 const app = express()
-const __dirname = path.resolve()
+const dirName = path.resolve()
 
 // middelwaress
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser(config.PARSER_SECRET))
-app.use(express.static(path.join(__dirname, config.STATIC_FOLDER)))
+app.use(express.static(path.join(dirName, 'build')))
 app.use(cors())
 
 // Routes

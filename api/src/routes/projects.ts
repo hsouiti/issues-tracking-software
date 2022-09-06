@@ -1,9 +1,9 @@
 import express from 'express'
-import asyncWrapper from '../middlewares/async.js'
+import asyncWrapper from '../middlewares/async'
 const projectsRouter = express.Router()
 
-import isAuthenticated from '../middlewares/isAuthanticated.js'
-import isAuthorized from '../middlewares/isAuthorized.js'
+import isAuthenticated from '../middlewares/isAuthanticated'
+import isAuthorized from '../middlewares/isAuthorized'
 
 import {
   getAllProjects,
@@ -11,8 +11,8 @@ import {
   updateProject,
   getProject,
   deleteProject,
-} from '../controllers/projects.js'
-import { getSingleProjectTickets } from '../controllers/tickets.js'
+} from '../controllers/projects'
+import { getSingleProjectTickets } from '../controllers/tickets'
 
 projectsRouter
   .route('/')

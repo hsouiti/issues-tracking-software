@@ -1,7 +1,7 @@
-import Ticket from '../models/tickets.js'
+import Ticket from '../models/tickets'
 
-import APIError from '../errors/APIError.js'
-import HttpStatusCodes from '../errors/statusCodes.js'
+import APIError from '../errors/APIError'
+import HttpStatusCodes from '../errors/statusCodes'
 
 // get all the tickets
 // TODO: Limit && sort tickets
@@ -51,11 +51,11 @@ export const getCurrentUserTickets = async (req, res, next) => {
 
   role === 'submitter'
     ? (tickets = await Ticket.find({
-        createdByUserID: userId,
-      }).sort({ createdAt: 'desc' }))
+      createdByUserID: userId,
+    }).sort({ createdAt: 'desc' }))
     : (tickets = await Ticket.find({
-        assignedToUserID: userId,
-      }).sort({ createdAt: 'desc' }))
+      assignedToUserID: userId,
+    }).sort({ createdAt: 'desc' }))
 
   res.status(HttpStatusCodes.OK).json({
     status: 'success',

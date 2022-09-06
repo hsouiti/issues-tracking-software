@@ -1,24 +1,26 @@
-import HttpStatusCode from './statusCodes.js'
+import HttpStatusCode from './statusCodes'
+import { ErrorType } from '../types'
 
 export default class APIError extends Error {
-  constructor(statusCode, message) {
+  statusCode: number
+  constructor(statusCode: number, message: string) {
     super(message)
     this.statusCode = statusCode
   }
 
-  static BadRequest(msg) {
+  static BadRequest(msg: string): ErrorType {
     return new APIError(HttpStatusCode.BAD_REQUEST, msg)
   }
 
-  static HTTP400Error(msg) {
+  static HTTP400Error(msg: string): ErrorType {
     return new APIError(HttpStatusCode.NOT_FOUND, msg)
   }
 
-  static Unauthorized(msg) {
+  static Unauthorized(msg: string): ErrorType {
     return new APIError(HttpStatusCode.UNAUTHORIZED, msg)
   }
 
-  static Forbidden(msg) {
+  static Forbidden(msg: string): ErrorType {
     return new APIError(HttpStatusCode.FORBIDDEN, msg)
   }
 }

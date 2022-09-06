@@ -1,14 +1,14 @@
 import express from 'express'
-import asyncWrapper from '../middlewares/async.js'
+import asyncWrapper from '../middlewares/async'
 
 import {
   getAllUsers,
   updateUser,
   getUser,
   deleteUser,
-} from '../controllers/users.js'
-import isAuthenticated from '../middlewares/isAuthanticated.js'
-import isAuthorized from '../middlewares/isAuthorized.js'
+} from '../controllers/users'
+import isAuthenticated from '../middlewares/isAuthanticated'
+import isAuthorized from '../middlewares/isAuthorized'
 
 const usersRouter = express.Router()
 

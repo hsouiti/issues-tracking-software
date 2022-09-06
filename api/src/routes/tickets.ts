@@ -1,8 +1,8 @@
 import express from 'express'
-import asyncWrapper from '../middlewares/async.js'
+import asyncWrapper from '../middlewares/async'
 
-/* import isAuthenticated from '../middlewares/isAuthanticated.js'
-import isAuthorized from '../middlewares/isAuthorized.js' */
+/* import isAuthenticated from '../middlewares/isAuthanticated'
+import isAuthorized from '../middlewares/isAuthorized' */
 
 import {
   getAllTickets,
@@ -10,7 +10,7 @@ import {
   updateTicket,
   getTicket,
   deleteTicket,
-} from '../controllers/tickets.js'
+} from '../controllers/tickets'
 
 const ticketsRouter = express.Router()
 

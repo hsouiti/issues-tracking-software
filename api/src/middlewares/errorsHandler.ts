@@ -1,20 +1,21 @@
-import HttpStatusCodes from '../errors/statusCodes.js'
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import HttpStatusCodes from '../errors/statusCodes'
 
 const errorsHanlder = (err, req, res, next) => {
-  //console.log(err)
+  // console.log(err)
 
-  let showError = {
+  const showError = {
     statusCode: err.statusCode || HttpStatusCodes.INTERNAL_SERVER_ERROR,
     message: err.message || 'Something went wrong try again later',
   }
 
   // monoose schema validation errors
-  if (
-    err.message.includes('validation failed') ||
-    err.name === 'ValidationError'
-  ) {
+  if (err.message.includes('validation failed') || err.name === 'ValidationError') {
     showError.message = Object.values(err.errors)
-      .map((error) => error.properties.message)
+      .map(error => error.properties.message)
       .join(', ')
     showError.statusCode = HttpStatusCodes.BAD_REQUEST
   }
@@ -22,13 +23,14 @@ const errorsHanlder = (err, req, res, next) => {
   // Duplicate Key (unique)
   if (err.code && err.code === 11000) {
     showError.statusCode = HttpStatusCodes.BAD_REQUEST
-    showError.message = `${Object.values(
-      err.keyValue
-    )} is already exist, please choose another one`
+
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    showError.message = `${Object.values(err.keyValue)} is already exist, please choose another one`
   }
 
   // CastError
   if (err.name === 'CastError') {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     showError.message = `No item found with id: ${err.value}`
     showError.statusCode = HttpStatusCodes.BAD_REQUEST
   }

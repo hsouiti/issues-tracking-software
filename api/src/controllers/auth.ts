@@ -1,8 +1,8 @@
-import User from '../models/users.js'
+import User from '../models/users'
 
-import APIError from '../errors/APIError.js'
-import HttpStatusCodes from '../errors/statusCodes.js'
-import { generateTokenPayload, tokenToCookiesRes } from '../helpers/authJWT.js'
+import APIError from '../errors/APIError'
+import HttpStatusCodes from '../errors/statusCodes'
+import { generateTokenPayload, tokenToCookiesRes } from '../helpers/authJWT'
 
 // register
 export const register = async (req, res, next) => {
@@ -20,9 +20,7 @@ export const register = async (req, res, next) => {
   const userToken = await generateTokenPayload(user)
   await tokenToCookiesRes(res, userToken)
 
-  res
-    .status(HttpStatusCodes.CREATED)
-    .json({ status: 'success', data: userToken })
+  res.status(HttpStatusCodes.CREATED).json({ status: 'success', data: userToken })
 }
 
 // login
@@ -42,9 +40,7 @@ export const login = async (req, res, next) => {
     const userToken = await generateTokenPayload(user)
     await tokenToCookiesRes(res, userToken)
 
-    return res
-      .status(HttpStatusCodes.OK)
-      .json({ status: 'success', data: userToken })
+    return res.status(HttpStatusCodes.OK).json({ status: 'success', data: userToken })
   }
   return next(APIError.Unauthorized('Invalid Credentials'))
 }

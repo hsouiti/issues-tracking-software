@@ -1,7 +1,7 @@
-import User from '../models/users.js'
+import User from '../models/users'
 import mongoose from 'mongoose'
-import APIError from '../errors/APIError.js'
-import HttpStatusCodes from '../errors/statusCodes.js'
+import APIError from '../errors/APIError'
+import HttpStatusCodes from '../errors/statusCodes'
 
 // get all the users
 // TODO: Limit && sort users
@@ -9,9 +9,7 @@ import HttpStatusCodes from '../errors/statusCodes.js'
 
 */
 export const getAllUsers = async (req, res, next) => {
-  const users = await User.find({})
-    .sort({ createdAt: 'desc' })
-    .select('-password')
+  const users = await User.find({}).sort({ createdAt: 'desc' }).select('-password')
 
   res.status(HttpStatusCodes.OK).json({
     status: 'success',
