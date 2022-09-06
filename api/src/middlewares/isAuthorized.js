@@ -14,4 +14,3 @@ const isAuthorized = (...roles) => {
 }
 
 export default isAuthorized
-

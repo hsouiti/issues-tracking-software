@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { roles } from '../helpers/constants.js';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { roles } from '../helpers/constants.js'
 
-const { Schema, model } = mongoose;
+const { Schema, model } = mongoose
 
 const userSchema = new Schema(
   {
@@ -36,21 +36,19 @@ const userSchema = new Schema(
     },
   },
   { timestamps: true }
-);
+)
 
 // hash the password
 userSchema.pre('save', async function () {
-  if (!this.isModified('password')) return;
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+  if (!this.isModified('password')) return
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+})
 
 // compare password
 userSchema.methods.comparePassword = async function (entredPassword) {
-  return await bcrypt.compare(entredPassword, this.password);
-};
-
-
+  return await bcrypt.compare(entredPassword, this.password)
+}
 
 const User = model('User', userSchema)
 export default User

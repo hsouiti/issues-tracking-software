@@ -37,6 +37,5 @@ projectsRouter
 projectsRouter
   .route('/:id/tickets')
   .get(isAuthenticated, asyncWrapper(getSingleProjectTickets))
- 
 
 export default projectsRouter

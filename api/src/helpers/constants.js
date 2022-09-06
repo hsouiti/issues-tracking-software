@@ -3,4 +3,4 @@ export const roles = {
   manager: 'project manager',
   developer: 'developer',
   submitter: 'submitter',
-};
+}

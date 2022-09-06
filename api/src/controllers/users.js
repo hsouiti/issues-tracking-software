@@ -13,7 +13,6 @@ export const getAllUsers = async (req, res, next) => {
     .sort({ createdAt: 'desc' })
     .select('-password')
 
-
   res.status(HttpStatusCodes.OK).json({
     status: 'success',
     data: {
@@ -22,7 +21,6 @@ export const getAllUsers = async (req, res, next) => {
     },
   })
 }
-
 
 // get a single user
 export const getUser = async (req, res, next) => {

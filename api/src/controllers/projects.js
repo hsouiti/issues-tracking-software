@@ -34,7 +34,6 @@ export const getProject = async (req, res, next) => {
   res.status(HttpStatusCodes.OK).json({ status: 'success', data: project })
 }
 
-
 // create project
 export const createProject = async (req, res) => {
   const project = await Project.create(req.body)
@@ -67,10 +66,8 @@ export const deleteProject = async (req, res, next) => {
     return next(APIError.HTTP400Error(`No Project with id: ${projectID}`))
   }
 
-  res
-    .status(202)
-    .json({
-      status: 'success',
-      data: { message: 'Project deleted succefully' },
-    })
+  res.status(202).json({
+    status: 'success',
+    data: { message: 'Project deleted succefully' },
+  })
 }
