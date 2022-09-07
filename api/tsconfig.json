@@ -1,5 +1,4 @@
 {
-  // https://www.youtube.com/watch?v=BKz7rnbQyK4&t=1009s
   "compilerOptions": {
     "target": "es6",
     "lib": [
