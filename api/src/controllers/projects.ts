@@ -1,6 +1,6 @@
 import APIError from '../errors/APIError'
 import HttpStatusCodes from '../errors/statusCodes'
-
+import { Response, Request, NextFunction } from 'express'
 import Project from '../models/projects'
 // get all the projects
 // TODO: Limit && sort projects
@@ -8,7 +8,7 @@ import Project from '../models/projects'
   Sorting by created date
 */
 
-export const getAllProjects = async (req, res, next) => {
+export const getAllProjects = async (req: Request, res: Response, next: NextFunction) => {
   const projects = await Project.find({}).sort({ createdAt: 'desc' })
 
   res.status(HttpStatusCodes.OK).json({
@@ -21,7 +21,7 @@ export const getAllProjects = async (req, res, next) => {
 }
 
 // get a single project
-export const getProject = async (req, res, next) => {
+export const getProject = async (req: Request, res: Response, next: NextFunction) => {
   const { id: projectID } = req.params
 
   const project = await Project.findOne({ _id: projectID })
@@ -34,13 +34,13 @@ export const getProject = async (req, res, next) => {
 }
 
 // create project
-export const createProject = async (req, res, next) => {
+export const createProject = async (req: Request, res: Response, next: NextFunction) => {
   const project = await Project.create(req.body)
   res.status(HttpStatusCodes.CREATED).json({ status: 'success', data: project })
 }
 
 // update project
-export const updateProject = async (req, res, next) => {
+export const updateProject = async (req: Request, res: Response, next: NextFunction) => {
   const { id: projectID } = req.params
 
   const project = await Project.findOneAndUpdate({ _id: projectID }, req.body, {
@@ -56,7 +56,7 @@ export const updateProject = async (req, res, next) => {
 }
 
 // delete project
-export const deleteProject = async (req, res, next) => {
+export const deleteProject = async (req: Request, res: Response, next: NextFunction) => {
   const { id: projectID } = req.params
 
   const project = await Project.findOneAndDelete({ _id: projectID })

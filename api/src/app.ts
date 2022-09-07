@@ -24,8 +24,8 @@ app.use(cors())
 
 // Routes
 app.use('/api/v1/projects', projectsRouter)
-/* app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/auth', authRouter)
+/* app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/tickets', ticketsRouter) */
 
 // Errors Handler

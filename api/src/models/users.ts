@@ -16,8 +16,8 @@ const userSchema = new Schema(
       unique: true,
       required: [true, 'User Email must be provided'],
       validate: {
-        validator: (mail) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi.test(mail),
-        message: (props) => `${props.value} is not a valid Email`,
+        validator: (mail: string) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi.test(mail),
+        message: (props: string) => `${props.value} is not a valid Email`,
       },
     },
     password: {

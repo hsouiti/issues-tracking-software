@@ -1,9 +1,9 @@
 import express from 'express'
 import asyncWrapper from '../middlewares/async'
 
-const authRouter = express.Router()
-
 import { register, login, logout } from '../controllers/auth'
+
+const authRouter = express.Router()
 
 authRouter.route('/register').post(asyncWrapper(register))
 

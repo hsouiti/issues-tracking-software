@@ -11,11 +11,19 @@ export interface UserInput {
     name: string;
     email: string;
     password: string;
-    role: string
+    role?: string;
 }
 
 
 export interface TokenInput {
     userId: string;
     role: string
+}
+
+
+export interface Roles {
+    admin?: string;
+    manager?: string;
+    developer?: string;
+    submitter?: string;
 }

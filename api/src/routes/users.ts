@@ -1,12 +1,7 @@
 import express from 'express'
 import asyncWrapper from '../middlewares/async'
 
-import {
-  getAllUsers,
-  updateUser,
-  getUser,
-  deleteUser,
-} from '../controllers/users'
+import { getAllUsers, updateUser, getUser, deleteUser } from '../controllers/users'
 import isAuthenticated from '../middlewares/isAuthanticated'
 import isAuthorized from '../middlewares/isAuthorized'
 
@@ -18,13 +13,7 @@ usersRouter.route('/').get(isAuthenticated, asyncWrapper(getAllUsers))
 usersRouter
   .route('/:id') // access granted for admins and for the current user
   .get(isAuthenticated, asyncWrapper(getUser))
-  .patch(
-    [isAuthenticated, isAuthorized('admin', 'manager')],
-    asyncWrapper(updateUser)
-  )
-  .delete(
-    [isAuthenticated, isAuthorized('admin', 'manager')],
-    asyncWrapper(deleteUser)
-  )
+  .patch([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(updateUser))
+  .delete([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(deleteUser))
 
 export default usersRouter

@@ -51,11 +51,11 @@ export const getCurrentUserTickets = async (req, res, next) => {
 
   role === 'submitter'
     ? (tickets = await Ticket.find({
-      createdByUserID: userId,
-    }).sort({ createdAt: 'desc' }))
+        createdByUserID: userId,
+      }).sort({ createdAt: 'desc' }))
     : (tickets = await Ticket.find({
-      assignedToUserID: userId,
-    }).sort({ createdAt: 'desc' }))
+        assignedToUserID: userId,
+      }).sort({ createdAt: 'desc' }))
 
   res.status(HttpStatusCodes.OK).json({
     status: 'success',

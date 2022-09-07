@@ -1,14 +1,16 @@
 import User from '../models/users'
+import { Request, Response, NextFunction } from 'express'
 
 import APIError from '../errors/APIError'
 import HttpStatusCodes from '../errors/statusCodes'
 import { generateTokenPayload, tokenToCookiesRes } from '../helpers/authJWT'
 
 // register
-export const register = async (req, res, next) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
   const { name, password, email } = req.body
 
   const isUserExist = await User.findOne({ email })
+
   if (isUserExist) {
     return next(APIError.BadRequest('Email already exists'))
   }
@@ -24,7 +26,7 @@ export const register = async (req, res, next) => {
 }
 
 // login
-export const login = async (req, res, next) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body
   if (!email || !password) {
     return next(APIError.BadRequest('Please provide email & password'))
@@ -46,7 +48,7 @@ export const login = async (req, res, next) => {
 }
 
 // logout
-export const logout = async (req, res, next) => {
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
   res.clearCookie('accessToken')
 
   res.status(HttpStatusCodes.OK).json({
