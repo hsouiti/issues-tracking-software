@@ -22,6 +22,8 @@ module.exports = {
   overrides: [],
   rules: {
     'prettier/prettier': 'error',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'warn',
     /*  'no-console': ['error', { allow: ['log', 'warn', 'error', 'info'] }], */
   },
 }
