@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 void (async () => {
   try {
-    await connectDB(process.env.MONGO_URL)
+    await connectDB()
     server.listen(app.get('PORT'), () => {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       console.log(`Server running at http://localhost:${app.get('PORT')}`)
@@ -21,6 +21,6 @@ void (async () => {
     const err = error as { message: string }
     console.log('Failed to connect to DB', err.message)
     server.close()
-    // process.exit(1)
+    process.exit(1)
   }
 })()
