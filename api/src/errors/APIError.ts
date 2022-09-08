@@ -23,4 +23,8 @@ export default class APIError extends Error {
   static Forbidden(msg: string): ErrorType {
     return new APIError(HttpStatusCode.FORBIDDEN, msg)
   }
+
+  static Internal(msg: string): ErrorType {
+    return new APIError(HttpStatusCode.INTERNAL_SERVER_ERROR, msg)
+  }
 }
