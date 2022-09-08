@@ -8,5 +8,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
   },
-"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false
 }
