@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { UserInput } from "./src/interfaces";
+export { };
 
 declare global {
     namespace NodeJS {
@@ -15,10 +15,13 @@ declare global {
     }
     // Extend Express Request
     namespace Express {
+
         interface Request {
-            user?: UserInput | undefined
+            user: {
+                userId?: string;
+                role?: string;
+            }
         }
     }
 }
 
-export { }
