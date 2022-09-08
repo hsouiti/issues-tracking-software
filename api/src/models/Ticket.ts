@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const { Schema, model } = mongoose
+import mongoose from 'mongoose';
+const {Schema, model} = mongoose;
 
 const ticketSchema = new Schema(
   {
@@ -50,7 +50,7 @@ const ticketSchema = new Schema(
       ref: 'User',
     },
   },
-  { timestamps: true }
-)
+  {timestamps: true}
+);
 
-export default model('Ticket', ticketSchema)
+export default model('Ticket', ticketSchema);

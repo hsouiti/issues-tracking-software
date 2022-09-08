@@ -38,9 +38,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       return next(APIError.Unauthorized('Invalid Credentials'));
     }
 
-    const userToken = 'gggggggggggggggggggggggggggggg';
-    /*  const userToken = await generateTokenPayload(user);
-    await tokenToCookiesRes(res, userToken); */
+    const userToken = await generateTokenPayload(user);
+    await tokenToCookiesRes(res, userToken);
 
     return res.status(HttpStatusCodes.OK).json({status: 'success', data: userToken});
   }

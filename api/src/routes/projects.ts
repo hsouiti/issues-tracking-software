@@ -1,8 +1,8 @@
-import express from 'express'
-import asyncWrapper from '../middlewares/async'
+import express from 'express';
+import asyncWrapper from '../middlewares/async';
 
-import isAuthenticated from '../middlewares/isAuthanticated'
-import isAuthorized from '../middlewares/isAuthorized'
+import isAuthenticated from '../middlewares/isAuthanticated';
+import isAuthorized from '../middlewares/isAuthorized';
 
 import {
   getAllProjects,
@@ -10,22 +10,22 @@ import {
   updateProject,
   getProject,
   deleteProject,
-} from '../controllers/projects'
-import { getSingleProjectTickets } from '../controllers/tickets'
+} from '../controllers/projects';
+import {getSingleProjectTickets} from '../controllers/tickets';
 
-const projectsRouter = express.Router()
+const projectsRouter = express.Router();
 
 projectsRouter
   .route('/')
   // access granted for all users
-  .get(isAuthenticated, asyncWrapper(getAllProjects))
+  .get(isAuthenticated, asyncWrapper(getAllProjects));
 // access granted for admins/project managers
 // .post([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(createProject))
 
 projectsRouter
   .route('/:id')
   // access granted for all users
-  .get(isAuthenticated, asyncWrapper(getProject))
+  .get(isAuthenticated, asyncWrapper(getProject));
 // access granted for admins/project managers
 // .patch([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(updateProject))
 // access granted for admins/project managers
@@ -33,4 +33,4 @@ projectsRouter
 
 // projectsRouter.route('/:id/tickets').get(isAuthenticated, asyncWrapper(getSingleProjectTickets))
 
-export default projectsRouter
+export default projectsRouter;

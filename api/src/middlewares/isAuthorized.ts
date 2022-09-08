@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express'
-import APIError from '../errors/APIError'
+import {Request, Response, NextFunction} from 'express';
+import APIError from '../errors/APIError';
 
 // TODO: for the roles developer & submitter
 //        check if he has the permissions to see (his profile)
@@ -10,8 +10,8 @@ const isAuthorized = (...roles: string[]): any => {
     /*  if (!roles.includes(req.user?.role)) {
       return next(APIError.Forbidden("you don't have access authorization"))
     } */
-    next()
-  }
-}
+    next();
+  };
+};
 
-export default isAuthorized
+export default isAuthorized;

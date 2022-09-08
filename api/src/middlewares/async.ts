@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from 'express'
+import {Request, Response, NextFunction} from 'express';
 
-type asyncFunc = (req: Request, res: Response, next: NextFunction) => Promise<unknown>
+type asyncFunc = (req: Request, res: Response, next: NextFunction) => Promise<unknown>;
 
 const asyncWrapper = (fn: asyncFunc) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await fn(req, res, next)
+      await fn(req, res, next);
     } catch (error) {
-      next(error)
+      next(error);
     }
-  }
-}
+  };
+};
 
-export default asyncWrapper
+export default asyncWrapper;

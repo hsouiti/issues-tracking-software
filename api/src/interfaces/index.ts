@@ -1,29 +1,29 @@
-/* eslint-disable prettier/prettier */
+import {JwtPayload} from 'jsonwebtoken';
+
 export interface ErrorType {
-    statusCode?: number;
-    message?: string;
-    name?: string;
-    stack?: string;
+  message?: string;
+  name?: string;
+  stack?: string;
+  statusCode?: number;
 }
 
 export interface UserInput {
-    _id: string;
-    name: string;
-    email: string;
-    password: string;
-    role?: string;
+  _id: string;
+  userId: string;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
 }
 
-
-export interface TokenInput {
-    userId: string;
-    role: string
+export interface DecodedInput extends JwtPayload {
+  userId?: string;
+  role?: string;
 }
-
 
 export interface Roles {
-    admin?: string;
-    manager?: string;
-    developer?: string;
-    submitter?: string;
+  admin?: string;
+  manager?: string;
+  developer?: string;
+  submitter?: string;
 }

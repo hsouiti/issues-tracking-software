@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const { Schema, model } = mongoose
+const {Schema, model} = mongoose;
 
 const projectSchema = new Schema(
   {
@@ -14,7 +14,7 @@ const projectSchema = new Schema(
       required: [true, 'Project description must be provided'],
     },
   },
-  { timestamps: true }
-)
+  {timestamps: true}
+);
 
-export default model('Project', projectSchema)
+export default model('Project', projectSchema);
