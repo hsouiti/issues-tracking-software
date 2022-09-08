@@ -31,7 +31,10 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, 'Password must be provided'],
-      min: [6, '{VALUE} must be at least 6'],
+      validate: {
+        validator: (pwd: string) => pwd.length >= 6,
+        message: (props: {value: string}): string => `Password must be at least 6 characters.`,
+      },
     },
     role: {
       type: String,

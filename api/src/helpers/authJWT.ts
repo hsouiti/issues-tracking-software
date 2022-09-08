@@ -8,12 +8,12 @@ import {IUserModel} from '../models/User';
 import config from '../../config/index';
 
 // generate Token payload
-export const generateTokenPayload = (user: IUserModel): DecodedInput => {
+export const generateTokenPayload = async (user: IUserModel): Promise<DecodedInput> => {
   return {userId: user._id, role: user.role};
 };
 
 // generateJWT
-export const generateJWT = (payload: DecodedInput): string => {
+export const generateJWT = async (payload: DecodedInput): Promise<string> => {
   return jwt.sign(payload, config.JWT_TOKEN_SECRET!, {
     expiresIn: config.JWT_TOKEN_TIME,
   });
