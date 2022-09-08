@@ -23,7 +23,8 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/strict-boolean-expressions': 'warn',
+    '@typescript-eslint/strict-boolean-expressions': 'error',
+    'eslint object-curly-spacing': 0,
     /*  'no-console': ['error', { allow: ['log', 'warn', 'error', 'info'] }], */
   },
-}
+};
