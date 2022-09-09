@@ -24,8 +24,14 @@
     "tailwind.config.cjs",
     "vite.config.ts",
     ".eslintrc.cjs",
-    "src",
+    "src"
   ],
+  "baseUrl": "./src",
+  "paths": {
+    "~/*": [
+      "./*"
+    ]
+  },
   "references": [
     {
       "path": "./tsconfig.node.json"

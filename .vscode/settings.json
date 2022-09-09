@@ -8,5 +8,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
   },
-"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false
+ /*  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }, */
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false
 }

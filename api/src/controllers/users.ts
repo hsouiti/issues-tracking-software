@@ -13,7 +13,6 @@ export const getAllUsers = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log('respon', req);
   const users = await User.find({}).sort({createdAt: 'desc'}).select('-password');
 
   res.status(HttpStatusCodes.OK).json({
