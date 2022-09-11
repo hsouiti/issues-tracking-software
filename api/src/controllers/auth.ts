@@ -1,6 +1,8 @@
 import {Request, Response, NextFunction} from 'express';
 import User from '../models/User';
 
+import * as authServices from '../services/auth';
+
 import APIError from '../errors/APIError';
 import HttpStatusCodes from '../errors/statusCodes';
 import {generateTokenPayload, tokenToCookiesRes} from '../helpers/authJWT';
@@ -9,15 +11,16 @@ import {generateTokenPayload, tokenToCookiesRes} from '../helpers/authJWT';
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const {email} = req.body;
 
-  const isUserExist = await User.findOne({email});
+  const isUserExist = await authServices.checkIfUserExist(email);
 
-  if (isUserExist != null) {
+  if (isUserExist !== null) {
     return next(APIError.BadRequest('Email already exists'));
   }
+  // TODO:
   // the first user is admin
   // how to attribute other roles (from register or from managing the users)
   //
-  const user = await User.create(req.body);
+  const user = await authServices.register(req.body);
 
   const userToken = await generateTokenPayload(user);
   await tokenToCookiesRes(res, userToken);
@@ -30,8 +33,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   /* if (!email || !password) {
     return next(APIError.BadRequest('Please provide email & password'));
   } */
-  const user = await User.findOne({email});
-
+  const user = await authServices.login(email);
   if (user != null) {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
