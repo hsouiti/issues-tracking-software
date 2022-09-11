@@ -13,15 +13,17 @@ export const getAllUsers = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const users = await User.find({}).sort({createdAt: 'desc'}).select('-password');
+  console.log('here');
 
-  res.status(HttpStatusCodes.OK).json({
+  const users = await User.find({}).sort({createdAt: 'desc'}).select('-password');
+  res.sendStatus(200);
+  /*   res.status(HttpStatusCodes.OK).json({
     status: 'success',
     data: {
       total: users.length,
       users,
     },
-  });
+  }); */
 };
 
 // get a single user

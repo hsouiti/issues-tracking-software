@@ -9,7 +9,7 @@ const usersRouter = express.Router();
 
 usersRouter
   .route('/')
-  .get(isAuthenticated, asyncWrapper(getAllUsers))
+  .get(/* isAuthenticated, */ asyncWrapper(getAllUsers))
   .post([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(createUser));
 
 usersRouter

@@ -21,11 +21,14 @@
     ]
   },
   "include": [
+    
     "./**/*.js ",
     "./config/*.ts",
     "src/**/*.ts",
     "./global.d.ts",
     ".eslintrc.cjs",
-  ],
+    "jest.config.ts"
+,   "__test__/**/*.spec.ts" 
+ ],
   "exclude": ["build", "node_modules"]
 }
