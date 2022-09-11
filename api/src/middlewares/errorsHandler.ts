@@ -5,7 +5,7 @@
 import HttpStatusCodes from '../errors/statusCodes';
 
 const errorsHanlder = (err, req, res, next) => {
-  // console.log(err)
+  // console.log(err);
 
   const showError = {
     statusCode: err.statusCode || HttpStatusCodes.INTERNAL_SERVER_ERROR,
@@ -35,6 +35,14 @@ const errorsHanlder = (err, req, res, next) => {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     showError.message = `No item found with id: ${err.value}`;
     showError.statusCode = HttpStatusCodes.BAD_REQUEST;
+  }
+  // jwt must be provided
+  if (err.name === 'JsonWebTokenError') {
+    console.log('herre');
+
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    showError.message = 'Authentication required';
+    showError.statusCode = HttpStatusCodes.UNAUTHORIZED;
   }
 
   return res.status(showError.statusCode).json({

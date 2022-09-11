@@ -3,6 +3,8 @@ import User from '../models/User';
 import APIError from '../errors/APIError';
 import HttpStatusCodes from '../errors/statusCodes';
 
+import * as usersServices from '../services/users';
+
 // get all the users
 // TODO: Limit && sort users
 /*
@@ -13,26 +15,23 @@ export const getAllUsers = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log('here');
+  const users = await usersServices.getAllUsers();
 
-  const users = await User.find({}).sort({createdAt: 'desc'}).select('-password');
-  res.sendStatus(200);
-  /*   res.status(HttpStatusCodes.OK).json({
+  res.status(HttpStatusCodes.OK).json({
     status: 'success',
     data: {
       total: users.length,
       users,
     },
-  }); */
+  });
 };
 
 // get a single user
 export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const {id: userID} = req.params;
 
-  const user = await User.findOne({_id: userID}).select('-password');
-
-  if (user == null) {
+  const user = await usersServices.getUser(userID);
+  if (user === null) {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
   }
 
@@ -57,12 +56,9 @@ export const updateUser = async (
 ): Promise<void> => {
   const {id: userID} = req.params;
 
-  const user = await User.findOneAndUpdate({_id: userID}, req.body, {
-    new: true,
-    runValidators: true,
-  }).select('-password');
+  const user = await usersServices.updateUser(userID, req.body);
 
-  if (user == null) {
+  if (user === null) {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
   }
 
@@ -75,14 +71,14 @@ export const updateUser = async (
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   const {id: userID} = req.params;
 
-  const user = await User.findOneAndDelete({_id: userID});
+  const user = await usersServices.deleteUser(userID);
 
-  if (user == null) {
+  if (user === null) {
     return next(APIError.HTTP400Error(`No User with id: ${userID}`));
   }
 
   res.status(HttpStatusCodes.ACCEPTED).json({
     status: 'success',
-    data: {message: ' User deleted succefully'},
+    data: {message: 'User deleted succefully'},
   });
 };
