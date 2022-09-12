@@ -29,6 +29,6 @@
     ".eslintrc.cjs",
     "jest.config.ts"
 ,   "__test__/**/*.spec.ts" 
- ],
+, "__test__/controllers/auth.ts", "__test__/controllers/users.ts" ],
   "exclude": ["build", "node_modules"]
 }
