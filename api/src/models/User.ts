@@ -13,6 +13,9 @@ export interface IUserModel extends IUser, Document {
   comparePassword: (entredPassword: string) => Promise<boolean>;
 }
 
+// eslint-disable-next-line no-useless-escape
+const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
 const userSchema = new Schema<IUser>(
   {
     name: {
@@ -24,7 +27,8 @@ const userSchema = new Schema<IUser>(
       unique: true,
       required: [true, 'User Email must be provided'],
       validate: {
-        validator: (mail: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gi.test(mail),
+        // eslint-disable-next-line no-useless-escape
+        validator: (mail: string) => emailRegex.test(mail),
         message: (props: {value: string}): string => `${props.value} is not a valid Email`,
       },
     },
