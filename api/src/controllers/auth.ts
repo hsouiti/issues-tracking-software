@@ -5,7 +5,7 @@ import * as authServices from '../services/auth';
 
 import APIError from '../errors/APIError';
 import HttpStatusCodes from '../errors/statusCodes';
-import {generateTokenPayload, tokenToCookiesRes} from '../helpers/authJWT';
+import {generateTokenPayload, generateJWT, tokenToCookiesRes} from '../helpers/authJWT';
 
 // register
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -30,18 +30,27 @@ export const register = async (req: Request, res: Response, next: NextFunction):
 // login
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const {email, password} = req.body;
-  /* if (!email || !password) {
+
+  if (email === '' || password === '') {
     return next(APIError.BadRequest('Please provide email & password'));
-  } */
+  }
   const user = await authServices.login(email);
-  if (user != null) {
+
+  if (user !== null) {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return next(APIError.Unauthorized('Invalid Credentials'));
     }
+    // let userToken = ''
 
-    const userToken = await generateTokenPayload(user);
-    await tokenToCookiesRes(res, userToken);
+    // const userToken = await generateJWT(user);
+    // await tokenToCookiesRes(res, userToken);
+    console.log('user', user);
+
+    // delete user.password;
+
+    // Add user_id fron response
+    const userToken = await generateJWT({user_id: user._id});
 
     return res.status(HttpStatusCodes.OK).json({status: 'success', data: userToken});
   }
