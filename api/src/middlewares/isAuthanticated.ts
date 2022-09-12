@@ -5,17 +5,25 @@ import {isValidToken} from '../helpers/authJWT';
 import {ErrorType, DecodedInput} from '../interfaces';
 
 const isAuthenticated = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const accessToken: string | null = req.signedCookies.accessToken;
+  // const accessToken: string | null = req.signedCookies.accessToken;
+  // const authHeader: string = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-  if (accessToken === null) {
+  // check if the request headers contains a valid token format
+  /*  if (authHeader === '' || !authHeader.startsWith('Bearer') {
     return next(APIError.Unauthorized('Authentication failed'));
-  }
-  try {
-    const decodedToken = (await isValidToken(accessToken)) as DecodedInput;
+  } */
 
-    const {userId, role} = decodedToken;
-    const user = {userId, role};
-    // req.user = user;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const userToken: string = authHeader?.split(' ')[1];
+
+  try {
+    const decodedToken = await isValidToken(userToken);
+    /*
+    const {userId} = decodedToken as DecodedInput;
+     req.user = {userId}; 
+     */
     next();
   } catch (error: unknown) {
     const err = error as ErrorType;
