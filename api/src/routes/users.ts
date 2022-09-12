@@ -9,13 +9,13 @@ const usersRouter = express.Router();
 
 usersRouter
   .route('/')
-  .get(/* isAuthenticated, */ asyncWrapper(getAllUsers))
+  .get(isAuthenticated, asyncWrapper(getAllUsers))
   .post([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(createUser));
 
 usersRouter
   .route('/:id') // access granted for admins and for the current user
-  .get(/* isAuthenticated, */ asyncWrapper(getUser))
-  .patch(/* [isAuthenticated, isAuthorized('admin', 'manager')], */ asyncWrapper(updateUser))
-  .delete(/* [isAuthenticated, isAuthorized('admin', 'manager')], */ asyncWrapper(deleteUser));
+  .get(isAuthenticated, asyncWrapper(getUser))
+  .patch([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(updateUser))
+  .delete([isAuthenticated, isAuthorized('admin', 'manager')], asyncWrapper(deleteUser));
 
 export default usersRouter;
