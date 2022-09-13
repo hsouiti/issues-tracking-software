@@ -16,16 +16,21 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": [
+    "./**/*.js ",
+    "./**/*.ts ",
     "tailwind.config.cjs",
     "vite.config.ts",
     ".eslintrc.cjs",
-    "src"
-  ],
+     "src/**/*.ts",
+     "src/**/*.js",
+    "jest.config.ts",
+    "jest.setup.ts"
+   ],
   "baseUrl": "./src",
   "paths": {
     "~/*": [
