@@ -21,21 +21,20 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "./**/*.js ",
-    "./**/*.ts ",
+    "./**/*.{tsx,ts} ",
     "tailwind.config.cjs",
     "vite.config.ts",
     ".eslintrc.cjs",
-     "src/**/*.ts",
-     "src/**/*.js",
+     "src/**/*.{tsx,ts}",
+     "src",
     "jest.config.ts",
     "jest.setup.ts"
    ],
-  "baseUrl": "./src",
+  "baseUrl": ".",
   "paths": {
-    "~/*": [
-      "./*"
-    ]
+      "@/*": ["./src/*"],
+      
+       /* "@components/*": ["src/components/*"],  */
   },
   "references": [
     {

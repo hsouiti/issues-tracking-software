@@ -1,13 +1,13 @@
-import './index.css';
-import logoPNG from '@assets/react.svg';
+import {lazy, Suspense} from 'react';
 
-function App() {
+const Router = lazy(() => import('./routes'));
+
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      <img src={logoPNG} alt="" />
-      Hello world!
-    </h1>
+    <Suspense fallback={<h2>Loading...</h2>}>
+      <Router />
+    </Suspense>
   );
-}
+};
 
 export default App;
