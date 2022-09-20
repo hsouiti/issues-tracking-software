@@ -11,6 +11,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'plugin:jest/recommended',
+    'plugin:jest/style',
+    'plugin:testing-library/react',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -19,11 +21,18 @@ module.exports = {
     sourceType: 'module',
     project: './client/tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'testing-library'],
   rules: {
     'react/react-in-jsx-scope': 0,
     'object-curly-spacing': 1,
-    'prettier/prettier': ['error', {endOfLine: 'auto'}],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+        'max-len': 100,
+      },
+    ],
+    'max-len': ['error', {code: 120}],
   },
   settings: {
     'import/resolver': {

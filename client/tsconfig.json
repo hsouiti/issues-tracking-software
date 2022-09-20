@@ -18,23 +18,26 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
+    "checkJs": false
   },
   "include": [
-    "./**/*.{tsx,ts} ",
+    "./**/*.{tsx,ts,js} ",
     "tailwind.config.cjs",
     "vite.config.ts",
     ".eslintrc.cjs",
-     "src/**/*.{tsx,ts}",
-     "src",
+    "src/**/*.{tsx,ts,js}",
+    "src",
     "jest.config.ts",
-    "jest.setup.ts"
-   ],
+    "jest.setup.ts",
+    "declaration.d.ts"
+  ],
   "baseUrl": ".",
   "paths": {
-      "@/*": ["./src/*"],
-      
-       /* "@components/*": ["src/components/*"],  */
+    "@/*": [
+      "./src/*"
+    ]
   },
   "references": [
     {
