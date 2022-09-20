@@ -1,5 +1,5 @@
 import {lazy, Suspense} from 'react';
-
+import '@styles/index.css';
 const Router = lazy(() => import('./routes'));
 
 const App = () => {
