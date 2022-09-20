@@ -3,7 +3,7 @@ import {AuthForm} from '@features/authentication';
 const Login = () => {
   return (
     <>
-      <div>login Page</div>
+      <div style={{margin: '50px 0', textAlign: 'center'}}>login Page</div>
       <AuthForm />
     </>
   );

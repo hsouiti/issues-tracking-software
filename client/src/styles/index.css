@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+form {
+    border: 1px solid gray;
+    width: 600px;
+    padding: 20px 40px;
+    margin: 20px auto;
+}
+
+.inputs {
+    padding: 10px;
+
+}
+
+.inputs>div {
+    padding: 10px;
+}
+
+.inputs input {
+    width: 300px;
+    margin-left: 10px;
+    padding: 5px 0;
+}
+
+button {
+    border: 1px solid gray;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
