@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {useState} from 'react';
 
 export const AuthForm = () => {
@@ -7,30 +8,32 @@ export const AuthForm = () => {
   };
 
   return (
-    <div>
-      <form>
-        <div data-testid="message">{message}</div>
-        <div className="inputs">
-          <div>
-            <label>Username</label>
-            <input type="text" className="border" name="username" />
+    <>
+      <div>
+        <form>
+          <div data-testid="message">{message}</div>
+          <div className="inputs">
+            <div>
+              <label>Username</label>
+              <input type="text" className="border" name="username" />
+            </div>
+            <div>
+              <label>Password</label>
+              <input
+                type="password"
+                className="border"
+                name="password"
+                role="password"
+                aria-label="password"
+              />
+            </div>
           </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              className="border"
-              name="password"
-              role="password"
-              aria-label="password"
-            />
-          </div>
-        </div>
-        <button disabled onClick={handleClick}>
-          Sign In
-        </button>
-        <button>Cancel </button>
-      </form>
-    </div>
+          <button disabled onClick={handleClick}>
+            Sign In
+          </button>
+          <button>Cancel </button>
+        </form>
+      </div>
+    </>
   );
 };
