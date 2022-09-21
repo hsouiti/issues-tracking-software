@@ -34,6 +34,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   if (email === '' || password === '') {
     return next(APIError.BadRequest('Please provide email & password'));
   }
+
   const user = await authServices.login(email);
 
   if (user !== null) {
@@ -45,15 +46,15 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     // const userToken = await generateJWT(user);
     // await tokenToCookiesRes(res, userToken);
-    console.log('user', user);
 
     // delete user.password;
 
     // Add user_id fron response
     const userToken = await generateJWT({user_id: user._id});
-
-    return res.status(HttpStatusCodes.OK).json({status: 'success', data: userToken});
+    const {email} = user;
+    return res.status(HttpStatusCodes.OK).json({user: email, token: userToken});
   }
+
   return next(APIError.Unauthorized('Invalid Credentials'));
 };
 
