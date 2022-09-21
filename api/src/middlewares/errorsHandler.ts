@@ -38,16 +38,12 @@ const errorsHanlder = (err, req, res, next) => {
   }
   // jwt must be provided
   if (err.name === 'JsonWebTokenError') {
-    console.log('herre');
-
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     showError.message = 'Authentication required';
     showError.statusCode = HttpStatusCodes.UNAUTHORIZED;
   }
 
   return res.status(showError.statusCode).json({
-    status: 'error',
-    statusCode: showError.statusCode,
     message: showError.message,
   });
 };
