@@ -2,6 +2,7 @@ import express from 'express';
 import asyncWrapper from '../middlewares/async';
 
 import {register, login, logout} from '../controllers/auth';
+import isAuthenticated from '../middlewares/isAuthanticated';
 
 const authRouter = express.Router();
 

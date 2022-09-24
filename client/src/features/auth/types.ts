@@ -1,10 +1,15 @@
 export interface User {
-  name: string;
   email: string;
-  password: string;
+  name: string;
+  role: string;
 }
 
 export type AuthState = {
   user: User | null;
   token: string | null;
 };
+
+export interface IGenericResponse {
+  status: string;
+  message: string;
+}

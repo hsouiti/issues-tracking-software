@@ -1,6 +1,6 @@
 export interface ErrorType {
-  message?: string;
-  name?: string;
-  stack?: string;
-  statusCode?: number;
+  data: {
+    message?: string;
+    statusCode?: number;
+  };
 }

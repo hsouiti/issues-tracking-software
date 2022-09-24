@@ -1,11 +1,13 @@
 /* eslint-disable max-len */
 import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+
 import {ErrorType} from '../../types';
 
-import {AuthState} from './types';
-import {useLogUserMutation} from './api/auth';
-import {setUser} from './service/authSlice';
+import {useLogUserMutation} from './api/authApi';
+import {getCurrentUser} from './service/authSlice';
+//import {setUser} from './service/authSlice';
 
 const initialState = {
   email: '',
@@ -13,7 +15,11 @@ const initialState = {
 };
 
 export const LoginForm = () => {
+  const currentUser = useSelector(getCurrentUser);
+  console.log('curre', currentUser);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -24,7 +30,7 @@ export const LoginForm = () => {
     });
   };
 
-  const [logUser, {data, isSuccess, isError, error}] = useLogUserMutation();
+  const [logUser, {isError, error: fetchError}] = useLogUserMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,15 +41,19 @@ export const LoginForm = () => {
     try {
       const {email, password} = values;
       const user = await logUser({email, password}).unwrap();
-      console.log('userData', user);
-      // navigate to "/"
+      //setUser(user);
+
+      navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
-      console.log(error);
-
-      console.log('their ', err.message);
+      //console.log('aysnc error', err.data.message);
+      console.log('aysnc error', err);
     }
   };
+
+  useEffect(() => {
+    if (isError) console.log('fetcherror', fetchError);
+  }, [isError]);
 
   return (
     <>
