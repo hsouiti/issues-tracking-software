@@ -17,12 +17,10 @@ export const getAllUsers = async (
 ): Promise<void> => {
   const users = await usersServices.getAllUsers();
 
-  res.status(HttpStatusCodes.OK).json({
-    status: 'success',
-    data: {
-      total: users.length,
-      users,
-    },
+  res.json({
+    status: HttpStatusCodes.OK,
+    total: users.length,
+    users,
   });
 };
 

@@ -15,7 +15,8 @@ export const generateTokenPayload = async (user: IUserModel): Promise<DecodedInp
 // generateJWT
 export const generateJWT = async (payload: DecodedInput): Promise<string> => {
   return jwt.sign(payload, config.JWT_TOKEN_SECRET!, {
-    expiresIn: config.JWT_TOKEN_TIME,
+    // expiresIn: config.JWT_TOKEN_TIME,
+    expiresIn: '30s',
   });
 };
 
@@ -25,8 +26,7 @@ export const isValidToken = async (token: string): Promise<string | DecodedInput
 };
 
 // save the token in the cookies & attach it to response
-export const tokenToCookiesRes = async (res: Response, userToken: DecodedInput): Promise<void> => {
-  const accessToken = await generateJWT(userToken);
+export const tokenToCookiesRes = async (res: Response, userToken: string): Promise<void> => {
   const ageToken = 1000 * 60 * 60 * 24;
   const options = {
     httpOnly: true,
@@ -34,6 +34,5 @@ export const tokenToCookiesRes = async (res: Response, userToken: DecodedInput):
     secure: process.env.NODE_ENV === 'production',
     signed: true,
   };
-
-  res.cookie('accessToken', accessToken, options);
+  res.cookie('access_token', userToken, options);
 };

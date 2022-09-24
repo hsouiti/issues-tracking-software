@@ -23,7 +23,7 @@ export const register = async (req: Request, res: Response, next: NextFunction):
   const user = await authServices.register(req.body);
 
   const userToken = await generateTokenPayload(user);
-  await tokenToCookiesRes(res, userToken);
+  // await tokenToCookiesRes(res, userToken);
   res.status(HttpStatusCodes.CREATED).json({status: 'success', data: userToken});
 };
 
@@ -34,6 +34,16 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   if (email === '' || password === '') {
     return next(APIError.BadRequest('Please provide email & password'));
   }
+  // console.log(req);
+
+  /* res.clearCookie('accessToken');
+  res.clearCookie('access_token'); */
+
+  const authHeader = req.headers.authorization;
+  console.log('authHeader', authHeader);
+  /*  const token = req.signedCookies.access_token;
+  console.log('token', token); */
+  console.log('*************************************************************');
 
   const user = await authServices.login(email);
 
@@ -42,17 +52,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (!isMatch) {
       return next(APIError.Unauthorized('Invalid Credentials'));
     }
-    // let userToken = ''
-
-    // const userToken = await generateJWT(user);
-    // await tokenToCookiesRes(res, userToken);
-
-    // delete user.password;
 
     // Add user_id fron response
     const userToken = await generateJWT({user_id: user._id});
-    const {email} = user;
-    return res.status(HttpStatusCodes.OK).json({user: email, token: userToken});
+    // await tokenToCookiesRes(res, userToken);
+    const {email, name, role} = user;
+    return res.status(HttpStatusCodes.OK).json({user: {name, email, role}, token: userToken});
   }
 
   return next(APIError.Unauthorized('Invalid Credentials'));
@@ -60,7 +65,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 // logout
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
-  res.clearCookie('accessToken');
+  res.clearCookie('access_token');
 
   res.status(HttpStatusCodes.OK).json({
     status: 'success',

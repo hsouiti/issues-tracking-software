@@ -28,7 +28,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cookieParser(config.PARSER_SECRET));
 app.use(express.static(path.join(dirName, 'build')));
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 
 // Routes
 app.get('/', (req, res) => {
