@@ -10,11 +10,16 @@ import {Projects} from '@/pages/projects';
 import {Issues} from '@/pages/issues';
 import {ErrorPage} from '@/pages/error-page';
 import {Login} from '@pages/login';
+import {RequireAuth} from '@/pages/requireAuth';
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Index />,
+    element: (
+      <RequireAuth>
+        <Index />
+      </RequireAuth>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {index: true, element: <Dashboard />},
