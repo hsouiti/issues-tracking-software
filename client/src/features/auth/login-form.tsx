@@ -15,9 +15,6 @@ const initialState = {
 };
 
 export const LoginForm = () => {
-  const currentUser = useSelector(getCurrentUser);
-  console.log('curre', currentUser);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
