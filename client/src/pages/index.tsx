@@ -1,15 +1,22 @@
-import {useSelector} from 'react-redux';
-import {getCurrentToken, getCurrentUser} from '../features/auth/service/authSlice';
-import {UsersList} from '../features/users/usersList';
+import {Navigate, Outlet} from 'react-router-dom';
+import {useAuth} from '@/hooks/useAuth';
+import {SideBar} from '@layouts/side-bar';
 
-export const Home = () => {
-  const user = useSelector(getCurrentUser);
-  const token = useSelector(getCurrentToken);
+export const Index = () => {
+  const isAuthenticated = true;
+  const {user} = useAuth();
+  console.log('user', user);
 
-  return (
-    <div>
-      Users :
-      <UsersList />
-    </div>
-  );
+  if (user) {
+    return (
+      <div className="wrapper flex w-full min-h-screen bg-white border">
+        <SideBar />
+        <main className="main w-full border p-4">
+          <Outlet />
+        </main>
+      </div>
+    );
+  } else {
+    return <Navigate to="/login" />;
+  }
 };

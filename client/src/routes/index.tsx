@@ -1,36 +1,49 @@
-import {lazy, suspence, Suspense} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 import '@styles/index.css';
-import {Loading} from '../components/loading';
-import {Home} from '../pages';
 // pages
-const Login = lazy(() => import('@pages/login'));
+import {Loading} from '@/components/loading';
+import {Dashboard} from '@/pages/dashboard';
+import {Index} from '@/pages';
+import {Users} from '@/pages/users';
+import {Projects} from '@/pages/projects';
+import {Issues} from '@/pages/issues';
+import {ErrorPage} from '@/pages/error-page';
+import {Login} from '@pages/login';
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <Suspense fallback={<Loading />}>
-              <Login />
-            </Suspense>
-          }
-        />
+const routes = createBrowserRouter([
+  {
+    path: '/',
+    element: <Index />,
+    errorElement: <ErrorPage />,
+    children: [
+      {index: true, element: <Dashboard />},
+      {
+        path: 'projects',
+        element: <Projects />,
+      },
+      {
+        path: 'issues',
+        element: <Issues />,
+      },
+      {
+        path: 'users',
+        element: <Users />,
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/register',
+    element: <Login />,
+  },
+]);
 
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Loading />}>
-              <Home />
-            </Suspense>
-          }
-        ></Route>
-      </Routes>
-    </BrowserRouter>
-  );
-};
+function Router() {
+  return <RouterProvider router={routes} />;
+}
 
 export default Router;
