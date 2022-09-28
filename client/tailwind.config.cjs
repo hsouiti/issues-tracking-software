@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       fontFamily: {
         ubuntu: ['Ubuntu', 'sans-serif'],
+        arvo: ['Arvo', 'serif'],
+        pt: ['PT Serif', 'serif'],
       },
     },
   },
