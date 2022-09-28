@@ -29,7 +29,7 @@ export const SideBar = () => {
               <li key={link.title} className="py-2 flex flex-row">
                 <NavLink
                   to={link.path}
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white
+                  className="flex flex-1 items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white
                   hover:bg-gray-100 dark:hover:bg-gray-700"
                   end
                 >
