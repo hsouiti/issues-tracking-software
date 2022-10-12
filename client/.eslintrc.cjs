@@ -6,7 +6,7 @@ module.exports = {
     'jest/globals': true,
   },
   extends: [
-    /*     'eslint:recommended',*/
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -32,7 +32,6 @@ module.exports = {
         'max-len': 100,
       },
     ],
-    'max-len': ['error', {code: 120}],
   },
   settings: {
     'import/resolver': {

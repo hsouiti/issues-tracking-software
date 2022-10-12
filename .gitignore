@@ -5,3 +5,4 @@
 node_modules
 /guide
 .env
+/client/src/utils/test-utils.tsx
