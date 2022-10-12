@@ -10,6 +10,7 @@ import {Projects} from '@/pages/projects';
 import {Issues} from '@/pages/issues';
 import {ErrorPage} from '@/pages/error-page';
 import {Login} from '@pages/login';
+import {Register} from '@pages/register';
 import {RequireAuth} from '@/pages/requireAuth';
 
 const routes = createBrowserRouter([
@@ -43,7 +44,7 @@ const routes = createBrowserRouter([
   },
   {
     path: '/register',
-    element: <Login />,
+    element: <Register />,
   },
 ]);
 
