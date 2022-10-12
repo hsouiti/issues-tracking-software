@@ -40,8 +40,6 @@ const routes = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
-    // workaround warning
-    action: () => true,
   },
   {
     path: '/register',
