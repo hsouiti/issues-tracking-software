@@ -1,70 +1,91 @@
-import {useRef} from 'react';
-import {useNavigate, Form} from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {useLogUserMutation} from './api/authApi';
 
 import {ErrorType} from '../../types';
+import {LoginRequest} from './types';
+
+const initialState = {
+  email: '',
+  password: '',
+};
 
 export const LoginForm = () => {
   const navigate = useNavigate();
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const [values, setValues] = useState<LoginRequest>(initialState);
 
-  const [logUser, {isError, error: fetchError}] = useLogUserMutation();
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setValues({...values, [name]: value});
+  };
 
-  const submitForm = async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    const formData = new FormData(formRef.current);
-    //formData.append('email', values.email);
-    //formData.append('password', values.password);
-    const updates = Object.fromEntries(formData);
+  const [logUser, {data, isSuccess, isError, error}] = useLogUserMutation();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      const user = await logUser(updates).unwrap();
+      const {email, password} = values;
+      await logUser({email, password}).unwrap();
+
       navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
+      console.log(error);
+
+      console.log('their ', err.message);
+      //console.log('aysnc error', err.data.message);
       console.log('aysnc error', err);
     }
-    navigate('/');
   };
 
   return (
-    <div>
-      <Form className="max-w-[400px] w-full mx-auto bg-white p-8" method="post" ref={formRef}>
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+      <form className="max-w-[400px] w-full mx-auto bg-white p-8">
         <div className="inputs">
-          <div>
-            <label>Username</label>
+          <div className="mb-6">
+            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
+              Username
+            </label>
             <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+              id="email"
               type="text"
-              className="border"
               name="email"
               aria-label="email"
-              /*   value={values.email}
-                onChange={handleChange} */
+              value={values.email}
+              onChange={handleChange}
             />
           </div>
-          <div>
-            <label>Password</label>
+
+          <div className="mb-6">
+            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
+              Password
+            </label>
             <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+              id="password"
               type="password"
-              className="border"
               name="password"
               role="password"
               aria-label="password"
-              /* value={values.password}
-                onChange={handleChange} */
+              value={values.password}
+              onChange={handleChange}
             />
           </div>
         </div>
-        <button onClick={submitForm} style={{padding: '10px 20px', border: '1px solid gray'}}>
-          Sign In
-        </button>
-        <button>Cancel </button>
-      </Form>
+
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-blue hover:bg-blue-dark  font-bold py-2 px-4 rounded"
+            onClick={handleSubmit}
+            type="button"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
