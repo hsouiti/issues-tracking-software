@@ -1,8 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
 import {api} from '../../app/api';
-import {AuthState, User} from '../types';
+import {AuthState, LoginRequest} from '../types';
 
-const url = 'auth';
 const baseUrl = 'http://localhost:4500/api/v1/auth';
 
 export const authApi = createApi({
@@ -11,7 +10,7 @@ export const authApi = createApi({
     baseUrl: baseUrl,
   }),
   endpoints: (builder) => ({
-    logUser: builder.mutation<AuthState, {email: string; password: string}>({
+    logUser: builder.mutation<AuthState, LoginRequest>({
       query: (loginData) => ({
         url: `/login`,
         method: 'POST',
