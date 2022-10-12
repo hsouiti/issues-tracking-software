@@ -16,10 +16,13 @@
 }
                 
 @layer components {
-    .sidebar-links svg {
+        .sidebar-links svg {
             @apply text-xl;
         }
-    }
+                #root {
+                    @apply h-screen;
+                }
+}
 
  .active {
      color: red;
