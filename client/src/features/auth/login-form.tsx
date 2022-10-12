@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
+  /* const navigate = useNavigate(); */
 
   const [values, setValues] = useState<LoginRequest>(initialState);
 
@@ -21,7 +21,7 @@ export const LoginForm = () => {
     setValues({...values, [name]: value});
   };
 
-  const [logUser, {data, isSuccess, isError, error}] = useLogUserMutation();
+  /*  const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export const LoginForm = () => {
       //console.log('aysnc error', err.data.message);
       console.log('aysnc error', err);
     }
-  };
+  }; */
 
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -79,8 +79,9 @@ export const LoginForm = () => {
         <div className="flex items-center justify-between">
           <button
             className="bg-blue hover:bg-blue-dark  font-bold py-2 px-4 rounded"
-            onClick={handleSubmit}
+            /*  onClick={handleSubmit} */
             type="button"
+            disabled
           >
             Sign In
           </button>
