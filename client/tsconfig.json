@@ -28,10 +28,10 @@
     "vite.config.ts",
     ".eslintrc.cjs",
     "src/**/*.{tsx,ts,js}",
-    "src",
     "jest.config.ts",
     "jest.setup.ts",
-    "declaration.d.ts"
+    "declaration.d.ts",
+    "src"
   ],
   "baseUrl": ".",
   "paths": {
