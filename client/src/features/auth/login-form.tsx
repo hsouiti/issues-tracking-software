@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {useLogUserMutation} from './api/authApi';
@@ -15,16 +15,23 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState<LoginRequest>(initialState);
 
+  const [disabled, setDisabled] = useState(true);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
+
     setValues({...values, [name]: value});
   };
+
+  //
+  useEffect(() => {
+    values.email !== '' && values.password !== '' ? setDisabled(false) : setDisabled(true);
+  }, [values]);
 
   const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('here');
 
     try {
       const {email, password} = values;
@@ -73,10 +80,10 @@ export const LoginForm = () => {
 
         <div className="flex items-center justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-dark text-white w-full py-2.5 px-4 rounded cursor-pointer disabled:opacity-75"
+            className="bg-blue-500 hover:bg-blue-dark text-white w-full py-2.5 px-4 rounded cursor-pointer disabled:opacity-25"
             onClick={handleSubmit}
             type="button"
-            disabled={false}
+            disabled={disabled}
           >
             Sign In
           </button>
