@@ -13,7 +13,7 @@ const initialState = {
 };
 
 export const LoginForm = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   /* const [values, setValues] = useState<LoginRequest>(initialState);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +51,7 @@ export const LoginForm = () => {
       const {email, password} = values;
       await logUser({email, password}).unwrap();
 
-      //navigate('/');
+      navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
       console.log(error);

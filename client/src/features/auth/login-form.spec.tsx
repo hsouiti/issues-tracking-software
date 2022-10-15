@@ -1,10 +1,3 @@
-/*
-// ** render ** //
-// check if the form 
-// contains text inputs (login / password)
-// contains login buttons & must be disabled
-*/
-
 import {render, screen} from '@testing-library/react';
 import {fireEvent, waitFor} from '@testing-library/react';
 import user from '@testing-library/user-event';
@@ -23,6 +16,12 @@ function getElement(role: string, name?: RegExp): HTMLElement {
 }
 
 describe('Authentication:', () => {
+  /*
+  // ** render ** //
+  // check if the form 
+  // contains text inputs (login / password)
+  // contains login buttons & must be disabled
+  */
   describe('-Login Form is mounted', () => {
     it('must conatins elements : => inputs (email, password) & button (Login: disabled)', () => {
       render(

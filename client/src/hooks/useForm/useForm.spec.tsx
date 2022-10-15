@@ -1,10 +1,10 @@
 import {renderHook, act} from '@testing-library/react';
-import {useForm} from './useForm/useForm';
+import {useForm} from './useForm';
 
 const {result} = renderHook(() => useForm({fullName: 'test'}));
 
 describe('Testing useForm hook', () => {
-  it.only('useForm should render properly with right values', () => {
+  it.skip('useForm should render properly with right values', () => {
     expect(result.current).toBeDefined();
     expect(result.current.values.fullName).toBe('test');
 
