@@ -5,7 +5,7 @@ import {useLogUserMutation} from './api/authApi';
 
 import {ErrorType} from '../../types';
 import {LoginRequest} from './types';
-import {useForm} from '../../hooks/useForm';
+import {useForm} from '../../hooks/useForm/useForm';
 
 const initialState = {
   email: '',
@@ -90,6 +90,7 @@ export const LoginForm = () => {
                 role="password"
                 aria-label="password"
                 value={values.password}
+                data-rule="isRequired"
                 onChange={handleChange}
               />
             </div>
