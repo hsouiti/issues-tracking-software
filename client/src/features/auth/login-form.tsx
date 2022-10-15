@@ -37,7 +37,6 @@ export const LoginForm = () => {
     values.email !== '' && values.password !== '' ? setDisabled(false) : setDisabled(true);
   }, [values]);
 
-  const [logUser, {isSuccess, isError, error: requestError}] = useLogUserMutation();
   //
   useEffect(() => {
     values.email !== '' && values.password !== '' ? setDisabled(false) : setDisabled(true);
