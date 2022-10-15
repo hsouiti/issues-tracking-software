@@ -1,8 +1,17 @@
-import 'whatwg-fetch';
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+/*
+// ** render ** //
+// check if the form 
+// contains text inputs (login / password)
+// contains login buttons & must be disabled
+*/
 
-import {renderWithProviders} from '../../utils/test/test-utils';
+import {render, screen} from '@testing-library/react';
+import {fireEvent, waitFor} from '@testing-library/react';
+import user from '@testing-library/user-event';
+
+import {Provider} from 'react-redux';
+import {store} from '../store';
+
 import {LoginForm} from './login-form';
 
 function getElement(role: string, name?: RegExp): HTMLElement {
@@ -13,18 +22,16 @@ function getElement(role: string, name?: RegExp): HTMLElement {
     : screen.getByRole(role);
 }
 
-const user = userEvent.setup();
-describe('Authentication Form:', () => {
-  describe('- Login Form is mounted', () => {
-    /*
-    // ** render ** //
-    // check if the form 
-    // contains text inputs (login / password)
-    // contains login buttons & must be disabled
-    */
+describe('Authentication:', () => {
+  describe('-Login Form is mounted', () => {
     it('must conatins elements : => inputs (email, password) & button (Login: disabled)', () => {
+      render(
+        <Provider store={store}>
+          .<LoginForm />
+        </Provider>
+      );
+
       // inputs
-      renderWithProviders(<LoginForm />);
       expect(getElement('textbox')).toBeInTheDocument();
       expect(getElement('password')).toBeInTheDocument();
 
@@ -32,61 +39,20 @@ describe('Authentication Form:', () => {
       expect(getElement('button', /sign/i)).toBeInTheDocument();
       expect(getElement('button', /sign/i)).toBeDisabled();
     });
-
-    /*
-    // the email/password are required 
-    // Enable Sign Up button
-    */
-    it('Enable Sign Up button When required Inputs are filled', async () => {
-      renderWithProviders(<LoginForm />);
-      await user.type(getElement('textbox'), 'test@email.com');
-      await user.type(getElement('password'), 'password');
-      expect(getElement('button', /sign/i)).toBeEnabled();
-    });
-  });
-
-  describe('- User Interaction', () => {
-    /*
-    // Validate the email/password 
-    //  Email && password souldn't be empty 
-    // - email Valid
-    // - password should contain : [at least 6 characters, at least one lowercase letter, one uppercase , one number , one special charcater]
-    */
-
-    it('Validate the email && the password', async () => {
-      renderWithProviders(<LoginForm />);
-
-      // eslint-disable-next-line no-useless-escape
-      const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/g;
-      const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,30}$/g;
-
-      const validateInput = (value: string, regexExp: RegExp) => regexExp.test(value);
-      const isEmpty = (val: string) => val.length > 0;
-      const emailTest = 'test@email.com';
-      const passwordTest = 'passworD@1';
-
-      // validate Email
-      await user.type(getElement('textbox'), emailTest);
-      expect(validateInput(emailTest, emailRegex)).toBeTruthy();
-
-      // validate password
-      await user.type(getElement('password'), passwordTest);
-      expect(validateInput(passwordTest, passRegex)).toBeTruthy();
-
-      await user.click(getElement('button', /sign/i));
-      expect(isEmpty(emailTest)).toBeTruthy();
-      expect(isEmpty(passwordTest)).toBeTruthy();
-    });
-
-    // it('Show error messages', () => {});
   });
 });
 
 /*
 // ** user beahvior => type & submit ** //
 // disable submit button when the one of the inputs required is empty
+// enable submit button when all reauired inputs have values
 // ***** submitted with wrong data ****
 // show/hide error messages (blur event)
+// - the email/password are required 
+// - the email/password inputs are validated 
+// - email value should contain the proper email format
+// - password should contain at least: 
+     [8 characters, ...other-conditions]
 
 */
 /* describe('- Validate form inputs', () => {

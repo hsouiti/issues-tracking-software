@@ -15,11 +15,16 @@ const initialState = {
 export const LoginForm = () => {
   // const navigate = useNavigate();
   /* const [values, setValues] = useState<LoginRequest>(initialState);
-
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     
+
+  const [disabled, setDisabled] = useState(true);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+
     setValues({...values, [name]: value});
   }; */
 
@@ -33,6 +38,12 @@ export const LoginForm = () => {
   }, [values]);
 
   const [logUser, {isSuccess, isError, error: requestError}] = useLogUserMutation();
+  //
+  useEffect(() => {
+    values.email !== '' && values.password !== '' ? setDisabled(false) : setDisabled(true);
+  }, [values]);
+
+  const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
