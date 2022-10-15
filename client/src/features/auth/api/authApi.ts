@@ -9,6 +9,7 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
   }),
+  tagTypes: ['login'],
   endpoints: (builder) => ({
     logUser: builder.mutation<AuthState, LoginRequest>({
       query: (loginData) => ({
@@ -18,6 +19,7 @@ export const authApi = createApi({
         // enable RTK Query to send the cookies along with the request.
         credentials: 'include',
       }),
+      invalidatesTags: ['login'],
     }),
   }),
 });
