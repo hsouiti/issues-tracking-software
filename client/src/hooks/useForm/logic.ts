@@ -1,4 +1,0 @@
-/*
-// validation functions
-// 
-*/
