@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+
 import {useNavigate} from 'react-router-dom';
 
 import {useLogUserMutation} from './api/authApi';
@@ -7,40 +8,16 @@ import {ErrorType} from '../../types';
 import {LoginRequest} from './types';
 import {useForm} from '../../hooks/useForm/useForm';
 
-const initialState = {
-  email: '',
-  password: '',
-};
+const initialState = [
+  {name: 'email', rule: 'isEmail'},
+  {name: 'password', rule: 'isPassword'},
+];
 
 export const LoginForm = () => {
   const navigate = useNavigate();
-  /* const [values, setValues] = useState<LoginRequest>(initialState);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    
-
-  const [disabled, setDisabled] = useState(true);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-
-    setValues({...values, [name]: value});
-  }; */
-
-  const [disabled, setDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState<any>(null);
   //
   const {values, errors, isValid, handleChange, reset} = useForm(initialState);
-
-  useEffect(() => {
-    values.email !== '' && values.password !== '' ? setDisabled(false) : setDisabled(true);
-  }, [values]);
-
-  //
-  useEffect(() => {
-    values.email !== '' && values.password !== '' ? setDisabled(false) : setDisabled(true);
-  }, [values]);
 
   const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
@@ -70,15 +47,21 @@ export const LoginForm = () => {
           <div className="inputs">
             <div className="mb-6">
               <input
-                className="appearance-none border rounded-lg w-full py-2.5 px-3 text-grey-darker"
+                className="peer appearance-none border rounded-lg w-full py-2.5 px-3 text-grey-darker"
                 placeholder="Your Email"
                 type="text"
                 name="email"
                 aria-label="email"
                 value={values.email}
-                data-rule="isRequired"
+                data-rule="isEmail"
                 onChange={handleChange}
+                onBlur={handleChange}
               />
+              {errors.email && (
+                <p role="email-message" className="px-2 mt-2 text-pink-600 text-sm">
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             <div className="mb-6">
@@ -90,9 +73,15 @@ export const LoginForm = () => {
                 role="password"
                 aria-label="password"
                 value={values.password}
-                data-rule="isRequired"
+                data-rule="isPassword"
                 onChange={handleChange}
+                onBlur={handleChange}
               />
+              {errors.password && (
+                <p role="pwd-message" className="px-2 mt-2 text-pink-600 text-sm">
+                  {errors.password}
+                </p>
+              )}
             </div>
           </div>
 
