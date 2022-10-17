@@ -1,13 +1,15 @@
 import {lazy, Suspense} from 'react';
 import '@styles/index.css';
 import {Loading} from './components/loading';
-const Router = lazy(() => import('./routes'));
+import {BrowserRouter} from 'react-router-dom';
+//const Router = lazy(() => import('./routes'));
+const Router = lazy(() => import('./routes/router'));
 
 const App = () => {
   return (
-    <Suspense fallback={<Loading />}>
+    <BrowserRouter>
       <Router />
-    </Suspense>
+    </BrowserRouter>
   );
 };
 
