@@ -1,4 +1,6 @@
 import {RegisterForm} from '@features/auth';
-export const Register = () => {
+const Register = () => {
   return <RegisterForm />;
 };
+
+export default Register;

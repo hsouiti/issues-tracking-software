@@ -1,11 +1,13 @@
-import {useLocation, Navigate} from 'react-router-dom';
+import {useLocation, Navigate, Outlet} from 'react-router-dom';
 import {useAuth} from '@/hooks/useAuth';
+
+import {SideBar} from '@layouts/side-bar';
 
 export interface Props {
   children?: JSX.Element;
 }
 
-export function RequireAuth({children}: Props) {
+function RequireAuth({children}: Props) {
   const isAuthenticated = useAuth();
   const location = useLocation();
 
@@ -15,3 +17,5 @@ export function RequireAuth({children}: Props) {
     <Navigate to="/login" replace state={{path: location.pathname}} />
   );
 }
+
+export default RequireAuth;

@@ -2,7 +2,7 @@ import {Navigate, Outlet} from 'react-router-dom';
 import {useAuth} from '@/hooks/useAuth';
 import {SideBar} from '@layouts/side-bar';
 
-export const Index = () => {
+const Index = () => {
   return (
     <div className="wrapper flex w-full min-h-screen bg-white border">
       <SideBar />
@@ -12,3 +12,5 @@ export const Index = () => {
     </div>
   );
 };
+
+export default Index;

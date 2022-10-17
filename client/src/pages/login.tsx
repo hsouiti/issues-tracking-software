@@ -1,4 +1,6 @@
 import {LoginForm} from '@features/auth';
-export const Login = () => {
+const Login = () => {
   return <LoginForm />;
 };
+
+export default Login;
