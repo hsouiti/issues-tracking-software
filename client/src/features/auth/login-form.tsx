@@ -48,7 +48,7 @@ export const LoginForm = () => {
                 label="Email Address"
                 name="email"
                 placeholder="Enter email address"
-                type="text"
+                type="email"
                 rule="isEmail"
                 value={values.email}
                 onChange={handleChange}

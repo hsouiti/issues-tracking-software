@@ -3,7 +3,7 @@ import {BiCheck} from 'react-icons/bi';
 
 interface TextFieldProps {
   name?: string;
-  type?: 'email' | 'password' | 'text';
+  type?: 'email' | 'password' | 'text' | 'number';
   value: string;
   placeholder?: string;
   label?: string;
@@ -20,13 +20,13 @@ const TextField = ({label, styles, error, rule, role, textarea, ...rest}: TextFi
 
   return (
     <div className="form__group" style={styles}>
-      <label htmlFor="password">
+      <label htmlFor={rest.name}>
         <p className="font-medium text-sm text-slate-700 pb-2">{label}</p>
 
         <InputElement
+          className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
           role={role}
           data-rule={rule}
-          className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
           {...rest}
         />
 
