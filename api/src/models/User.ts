@@ -16,6 +16,8 @@ export interface IUserModel extends IUser, Document {
 // eslint-disable-next-line no-useless-escape
 const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
+const passwordRegx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,30}$/g;
+
 const userSchema = new Schema<IUser>(
   {
     name: {
@@ -36,8 +38,9 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: [true, 'Password must be provided'],
       validate: {
-        validator: (pwd: string) => pwd.length >= 6,
-        message: (props: {value: string}): string => `Password must be at least 6 characters.`,
+        validator: (pwd: string) => passwordRegx.test(pwd),
+        message: (props: {value: string}): string =>
+          'Passwod should contains at least 6 charaters and containing uppercase,lowercase, one number and one special charcater',
       },
     },
     role: {
