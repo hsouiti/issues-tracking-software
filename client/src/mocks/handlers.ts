@@ -3,8 +3,10 @@ import {nanoid} from '@reduxjs/toolkit';
 
 const token = nanoid();
 
+const baseUrl = 'http://localhost:4500/api/v1';
+
 export const handlers = [
-  rest.post('http://localhost:4500/api/v1/auth/login', async (req, res, ctx) => {
+  rest.post(`${baseUrl}/auth/login`, async (req, res, ctx) => {
     const body = await req.text();
     const credentials = JSON.parse(body);
 
