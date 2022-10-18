@@ -1,8 +1,8 @@
 export interface ErrorType {
-  error(arg0: string, error: any): unknown;
-  message(arg0: string, message: any): unknown;
-  /* data: {
+  data?: {
     message?: string;
     statusCode?: number;
-  }; */
+  };
+  error?: string;
+  status: string | number;
 }

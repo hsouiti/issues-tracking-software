@@ -32,7 +32,6 @@ const errorsMessages: {
   isEmail: 'You should enter a valid Email',
   isPassword:
     'should contains at least 6 charaters and containing uppercase,lowercase, one number and one special charcater',
-  //- password should contain : [at least 6 characters, at least one lowercase letter, one uppercase , one number , one special charcater]
 };
 
 let errors: Error = {};
