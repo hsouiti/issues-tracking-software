@@ -40,10 +40,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   res.clearCookie('access_token'); */
 
   const authHeader = req.headers.authorization;
-  console.log('authHeader', authHeader);
   /*  const token = req.signedCookies.access_token;
   console.log('token', token); */
-  console.log('*************************************************************');
 
   const user = await authServices.login(email);
 
@@ -55,7 +53,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     // Add user_id fron response
     const userToken = await generateJWT({user_id: user._id});
-    // await tokenToCookiesRes(res, userToken);
     const {email, name, role} = user;
     return res.status(HttpStatusCodes.OK).json({user: {name, email, role}, token: userToken});
   }
