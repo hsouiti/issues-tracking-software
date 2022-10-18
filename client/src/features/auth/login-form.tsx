@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 
 import {useNavigate} from 'react-router-dom';
 
+import {FiLogIn} from 'react-icons/fi';
+
 import {useLogUserMutation} from './api/authApi';
 
 import {ErrorType} from '../../types';
-import {LoginRequest} from './types';
 import {useForm} from '../../hooks/useForm/useForm';
 
 const initialState = [
@@ -31,71 +32,108 @@ export const LoginForm = () => {
       navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
-      console.log(error);
-
+      /* const {
+        data: {message},
+      } = error; */
       //console.log('aysnc error', err.data.message);
-      console.log('aysnc error', err.error);
-      setErrorMessage(err.error);
+      console.log('aysnc error', err);
+      err.error ? setErrorMessage(err.error) : setErrorMessage(err.data.message);
     }
   };
 
   return (
     <>
       {isError && <div className="fixed w-full text-center top-[150px]">{errorMessage}</div>}
-      <div className="h-screen bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex items-center">
-        <form className="max-w-[400px] w-full mx-auto bg-white py-16 px-8 border">
-          <div className="inputs">
-            <div className="mb-6">
-              <input
-                className="peer appearance-none border rounded-lg w-full py-2.5 px-3 text-grey-darker"
-                placeholder="Your Email"
-                type="text"
-                name="email"
-                aria-label="email"
-                value={values.email}
-                data-rule="isEmail"
-                onChange={handleChange}
-                onBlur={handleChange}
-              />
-              {errors.email && (
-                <p role="email-message" className="px-2 mt-2 text-pink-600 text-sm">
-                  {errors.email}
-                </p>
-              )}
-            </div>
+      <div className="h-screen bg-white flex items-center bg-slate-100">
+        <div className="mx-auto my-10 bg-white py-4 px-10 rounded-xl shadow shadow-slate-300 md:w-[400px] w-[80%]">
+          <h1 className="text-4xl font-medium text-center mt-4">Login</h1>
 
-            <div className="mb-6">
-              <input
-                className="bg-white border rounded-lg w-full py-2.5 px-3 text-grey-darker"
-                placeholder="Password"
-                type="password"
-                name="password"
-                role="password"
-                aria-label="password"
-                value={values.password}
-                data-rule="isPassword"
-                onChange={handleChange}
-                onBlur={handleChange}
-              />
-              {errors.password && (
-                <p role="pwd-message" className="px-2 mt-2 text-pink-600 text-sm">
-                  {errors.password}
-                </p>
-              )}
-            </div>
-          </div>
+          <form action="" className="my-4">
+            <div className="flex flex-col space-y-5">
+              <label htmlFor="email">
+                <p className="font-medium text-md text-slate-700 pb-2">Email address</p>
 
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-dark text-white w-full py-2.5 px-4 rounded cursor-pointer disabled:opacity-25"
-              onClick={handleSubmit}
-              type="button"
-              disabled={!isValid}
-            >
-              Sign In
-            </button>
-          </div>
-        </form>
+                <input
+                  id="email"
+                  placeholder="Enter email address"
+                  type="text"
+                  name="email"
+                  value={values.email}
+                  data-rule="isEmail"
+                  onChange={handleChange}
+                  onBlur={handleChange}
+                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                />
+                {errors.email && (
+                  <p role="email-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
+                    {errors.email}
+                  </p>
+                )}
+              </label>
+              <label htmlFor="password">
+                <p className="font-medium text-md text-slate-700 pb-2">Password</p>
+                <input
+                  id="password"
+                  placeholder="Enter your password"
+                  name="password"
+                  type="password"
+                  role="password"
+                  value={values.password}
+                  data-rule="isPassword"
+                  onChange={handleChange}
+                  onBlur={handleChange}
+                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                />
+
+                {errors.password && (
+                  <p role="pwd-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
+                    {errors.password}
+                  </p>
+                )}
+              </label>
+              <div className="flex flex-row justify-between">
+                <div>
+                  <a href="#" className="font-light text-indigo-600 text-sm">
+                    Forgot Password?
+                  </a>
+                </div>
+              </div>
+              <button
+                onClick={handleSubmit}
+                disabled={!isValid}
+                className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center disabled:opacity-50"
+              >
+                <span>Login</span>
+                <FiLogIn />
+              </button>
+              <p className="text-center">
+                Not registered yet?{' '}
+                <a
+                  href="#"
+                  className="text-indigo-600 font-medium inline-flex space-x-1 items-center"
+                >
+                  <span>Register now </span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </span>
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
