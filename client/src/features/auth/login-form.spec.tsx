@@ -121,15 +121,7 @@ describe('Authentication Form:', () => {
 // ***** submitted with wrong data ****
 // show/hide error messages (blur event)
 
-*/
-/* describe('- Validate form inputs', () => {
-  it('name it later', async () => {
-    render(<Routes><Routes><LoginForm /></Routes></Routes>);
-    user.click(getElement('button', /sign/i));
 
-    await waitFor(() => expect(screen.getByTestId('message')).toHaveTextContent(/succes/i));
-  });
-}); */
 /*
 // ***** submitted with valid data ****
 // - must disable the submit button while the form page
