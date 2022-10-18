@@ -112,13 +112,7 @@ export const RegisterForm = () => {
                   </p>
                 )}
               </label>
-              <div className="flex flex-row justify-between">
-                <div>
-                  <a href="#" className="font-light text-indigo-600 text-sm">
-                    Forgot Password?
-                  </a>
-                </div>
-              </div>
+
               <button
                 onClick={handleSubmit}
                 disabled={!isValid}
