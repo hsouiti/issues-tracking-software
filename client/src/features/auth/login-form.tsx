@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import TextField from '../../components/TextField';
+import InputField from '@components/InputField';
 import {useNavigate, Link} from 'react-router-dom';
 
-import {FiLogIn} from 'react-icons/fi';
+import {FiLogIn, FiEye, FiEyeOff} from 'react-icons/fi';
 import {BiLinkExternal, BiCheck} from 'react-icons/bi';
 
 import {useLogUserMutation} from './api/authApi';
 
 import {ErrorType} from '../../types';
-import {useForm} from '../../hooks/useForm/useForm';
+import {useForm} from '@hooks/useForm/useForm';
 
 const initialState = [
   {name: 'email', rule: 'isEmail'},
@@ -19,7 +19,10 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<any>(null);
   //
-  const {values, errors, isValid, handleChange, handleSubmit} = useForm(initialState, submitForm);
+  const {values, errors, isValid, handleChange, handleSubmit, validate} = useForm(
+    initialState,
+    submitForm
+  );
 
   const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
@@ -44,18 +47,25 @@ export const LoginForm = () => {
 
           <form action="" className="my-4" onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-5">
-              <TextField
+              <InputField
+                {...validate('email', {isEmail: true, min: 8})}
                 label="Email Address"
                 name="email"
-                placeholder="Enter email address"
+                placeholder="Enter your email"
                 type="email"
-                rule="isEmail"
                 value={values.email}
                 onChange={handleChange}
                 error={errors.email ?? null}
               />
 
-              <TextField
+              <InputField
+                {...validate('password', {
+                  min: 8,
+                  number: true,
+                  lowercase: true,
+                  uppercase: true,
+                  special: true,
+                })}
                 label="Password"
                 name="password"
                 placeholder="Enter your password"
