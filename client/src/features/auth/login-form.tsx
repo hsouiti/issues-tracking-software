@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
 import {FiLogIn} from 'react-icons/fi';
 
@@ -46,12 +46,12 @@ export const LoginForm = () => {
       {isError && <div className="fixed w-full text-center top-[150px]">{errorMessage}</div>}
       <div className="h-screen bg-white flex items-center bg-slate-100">
         <div className="mx-auto my-10 bg-white py-4 px-10 rounded-xl shadow shadow-slate-300 md:w-[400px] w-[80%]">
-          <h1 className="text-4xl font-medium text-center mt-4">Login</h1>
+          <h1 className="text-4xl font-medium text-center my-4 mb-8">Login</h1>
 
           <form action="" className="my-4">
             <div className="flex flex-col space-y-5">
               <label htmlFor="email">
-                <p className="font-medium text-md text-slate-700 pb-2">Email address</p>
+                <p className="font-medium text-sm text-slate-700 pb-2">Email address</p>
 
                 <input
                   id="email"
@@ -71,7 +71,7 @@ export const LoginForm = () => {
                 )}
               </label>
               <label htmlFor="password">
-                <p className="font-medium text-md text-slate-700 pb-2">Password</p>
+                <p className="font-medium text-sm text-slate-700 pb-2">Password</p>
                 <input
                   id="password"
                   placeholder="Enter your password"
@@ -108,8 +108,8 @@ export const LoginForm = () => {
               </button>
               <p className="text-center">
                 Not registered yet?{' '}
-                <a
-                  href="#"
+                <Link
+                  to="/register"
                   className="text-indigo-600 font-medium inline-flex space-x-1 items-center"
                 >
                   <span>Register now </span>
@@ -129,7 +129,7 @@ export const LoginForm = () => {
                       />
                     </svg>
                   </span>
-                </a>
+                </Link>
               </p>
             </div>
           </form>
