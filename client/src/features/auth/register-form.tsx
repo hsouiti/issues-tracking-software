@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
 import {FiLogIn} from 'react-icons/fi';
+import {BiLinkExternal} from 'react-icons/bi';
 
 import {useLogUserMutation} from './api/authApi';
 
@@ -13,6 +14,7 @@ const initialState = [
   {name: 'name', rule: 'isRequired'},
   {name: 'email', rule: 'isEmail'},
   {name: 'password', rule: 'isPassword'},
+  {name: 'confirmPassword', rule: 'isConfirmPassword'},
 ];
 
 export const RegisterForm = () => {
@@ -47,7 +49,7 @@ export const RegisterForm = () => {
       {isError && <div className="fixed w-full text-center top-[150px]">{errorMessage}</div>}
       <div className="h-screen bg-white flex items-center bg-slate-100">
         <div className="mx-auto my-10 bg-white py-4 px-10 rounded-xl shadow shadow-slate-300 md:w-[400px] w-[80%]">
-          <h1 className="text-4xl font-medium text-center my-4 mb-8">Register</h1>
+          <h1 className="text-3xl font-medium text-center my-4 mb-8">Sign Up</h1>
 
           <form action="" className="my-4">
             <div className="flex flex-col space-y-5">
@@ -113,36 +115,44 @@ export const RegisterForm = () => {
                 )}
               </label>
 
+              <label htmlFor="confirmPassword">
+                <p className="font-medium text-sm text-slate-700 pb-2">Confirm password</p>
+                <input
+                  id="confirmPassword"
+                  placeholder="Enter your password"
+                  name="confirmPassword"
+                  type="password"
+                  role="confirmPassword"
+                  value={values.confirmPassword}
+                  data-rule="isPassword"
+                  onChange={handleChange}
+                  onBlur={handleChange}
+                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                />
+
+                {errors.confirmPassword && (
+                  <p role="pwd-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
+                    {errors.confirmPassword}
+                  </p>
+                )}
+              </label>
               <button
                 onClick={handleSubmit}
                 disabled={!isValid}
                 className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center disabled:opacity-50"
               >
-                <span>Login</span>
+                <span>Sign Up</span>
                 <FiLogIn />
               </button>
-              <p className="text-center">
+              <p className="text-center text-sm">
                 Already have an account? {'  '}
                 <Link
                   to="/login"
-                  className="text-indigo-600 font-medium inline-flex space-x-1 items-center"
+                  className="text-indigo-600 text-sm font-medium inline-flex space-x-1 items-center"
                 >
-                  <span>Login</span>
+                  <span>Sign In</span>
                   <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
+                    <BiLinkExternal />
                   </span>
                 </Link>
               </p>
