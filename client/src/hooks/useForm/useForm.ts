@@ -26,6 +26,23 @@ const capitalize = (word: string) => word.replace(/\b\w/g, (letter) => letter.to
 interface IsPasswordType {
   [key: string]: string | boolean;
 }
+
+//https://react-hook-form.com/api/useform/register
+
+/* 
+// validaton rules 
+    isRequired
+    min
+    max
+    isEmail
+*/
+
+/*
+    <input {...register("firstName", { required: true, maxLength: 20 })} />
+    <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
+    <input type="number" {...register("age", { min: 18, max: 99 })} />
+*/
+
 const errorsMessages: {
   isRequired: string;
   isEmail: string;
@@ -120,6 +137,30 @@ export function useForm<T>(
     });
   }
 
+  // validate form elements
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //ts-ignore
+  const validate = (...params: any) => {
+    console.log('here', params);
+    /* 
+      [  name", {
+      "required": true,
+      "min": 8}
+      ]
+    */
+  };
+
+  /*
+  <input 
+    onChange={onChange} // assign onChange event 
+    onBlur={onBlur} // assign onBlur event
+    name={name} // assign name prop
+    ref={ref} // assign ref prop
+  />
+  // same as above
+  <input {...register('firstName')} />
+  */
+
   // get InitialValues
   const getInitialValues = (initial: any[]) => {
     const inputss = {};
@@ -147,6 +188,8 @@ export function useForm<T>(
       // access custom attribute 'data-rule' from event
       dataset: {rule},
     } = event.target;
+    console.log(event.target.dataset);
+
     setValues({...values, [name]: value});
     setErrors(validateField({name, value, rule}));
     setIsValid(Object.keys(validateField({name, value, rule})).length === 0);
@@ -163,6 +206,7 @@ export function useForm<T>(
   return {
     handleChange,
     handleSubmit,
+    validate,
     values,
     errors,
     isValid,
