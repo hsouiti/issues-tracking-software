@@ -23,6 +23,9 @@ const validatePassword = (password: string) => {
 
 const capitalize = (word: string) => word.replace(/\b\w/g, (letter) => letter.toUpperCase());
 
+interface IsPasswordType {
+  [key: string]: string | boolean;
+}
 const errorsMessages: {
   isRequired: string;
   isEmail: string;
@@ -30,8 +33,14 @@ const errorsMessages: {
 } = {
   isRequired: 'is required',
   isEmail: 'You should enter a valid Email',
-  isPassword:
-    'should contains at least 6 charaters and containing uppercase,lowercase, one number and one special charcater',
+  isPassword: 'Min 6 characters | Uppercase | Lowercase | Number | Special character',
+  /*  isPassword: {
+    minLen: 'Min 6 characters',
+    uppercase: true,
+    lowercase: true,
+    number: true,
+    special: true,
+  }, */
 };
 
 let errors: Error = {};
@@ -71,13 +80,15 @@ export function validateField<T>(input: InputProps<T>): Error {
 
     // isPassword rule
     if (rule.trim().includes('isPassword')) {
+      console.log('errors message', errorsMessages['isPassword']);
+
       if (
         typeof value === 'string' &&
         (value.trim().length < 6 || !validatePassword(value.trim()))
       ) {
         errors = {
           ...errors,
-          [name]: `${capitalize(name)} ${errorsMessages['isPassword']}`,
+          [name]: `${errorsMessages['isPassword']}`,
         };
       } else {
         delete errors[`${name}`];
