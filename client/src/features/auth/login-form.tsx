@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-
+import TextField from '../../components/TextField';
 import {useNavigate, Link} from 'react-router-dom';
 
 import {FiLogIn} from 'react-icons/fi';
@@ -19,13 +19,11 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<any>(null);
   //
-  const {values, errors, isValid, handleChange, reset} = useForm(initialState);
+  const {values, errors, isValid, handleChange, handleSubmit} = useForm(initialState, submitForm);
 
   const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  async function submitForm(): Promise<void> {
     try {
       const {email, password} = values;
       await logUser({email, password}).unwrap();
@@ -35,7 +33,7 @@ export const LoginForm = () => {
       const err = error as ErrorType;
       err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
     }
-  };
+  }
 
   return (
     <>
@@ -44,58 +42,30 @@ export const LoginForm = () => {
         <div className="mx-auto my-10 bg-white py-4 px-10 rounded-xl shadow shadow-slate-300 md:w-[400px] w-[80%]">
           <h1 className="text-3xl font-medium text-center my-4 mb-8">Sign In</h1>
 
-          <form action="" className="my-4">
+          <form action="" className="my-4" onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-5">
-              <label htmlFor="email">
-                <p className="font-medium text-sm text-slate-700 pb-2">Email address</p>
+              <TextField
+                label="Email Address"
+                name="email"
+                placeholder="Enter email address"
+                type="text"
+                rule="isEmail"
+                value={values.email}
+                onChange={handleChange}
+                error={errors.email ?? null}
+              />
 
-                <input
-                  id="email"
-                  placeholder="Enter email address"
-                  type="text"
-                  name="email"
-                  value={values.email}
-                  data-rule="isEmail"
-                  onChange={handleChange}
-                  onBlur={handleChange}
-                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                />
-                {errors.email && (
-                  <p role="email-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
-                    {errors.email}
-                  </p>
-                )}
-              </label>
-              <label htmlFor="password">
-                <p className="font-medium text-sm text-slate-700 pb-2">Password</p>
-                <input
-                  id="password"
-                  placeholder="Enter your password"
-                  name="password"
-                  type="password"
-                  role="password"
-                  value={values.password}
-                  data-rule="isPassword"
-                  onChange={handleChange}
-                  onBlur={handleChange}
-                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                />
+              <TextField
+                label="Password"
+                name="password"
+                placeholder="Enter your password"
+                type="password"
+                rule="isPassword"
+                value={values.password}
+                onChange={handleChange}
+                error={errors.password ?? null}
+              />
 
-                {errors.password && (
-                  <p
-                    role="pwd-message"
-                    className="w-full px-0 mt-2 text-pink-600 text-sm flex flex-wrap justify-start gap-x-4 gap-y-2"
-                  >
-                    {errors.password.split('|').map((el) => {
-                      return (
-                        <span className="inline-block flex" key={el}>
-                          <BiCheck /> {el}
-                        </span>
-                      );
-                    })}
-                  </p>
-                )}
-              </label>
               <div className="flex flex-row justify-between">
                 <div>
                   <a href="#" className="font-bold text-indigo-600 text-sm">

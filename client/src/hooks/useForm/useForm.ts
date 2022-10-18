@@ -104,7 +104,10 @@ export function validateField<T>(input: InputProps<T>): Error {
 // function to generate form Inputs
 */
 
-export function useForm<T>(initialState: {name: string; rule: string}[]) {
+export function useForm<T>(
+  initialState: {name: string; rule: string}[],
+  submitForm: () => Promise<void>
+) {
   /*
   // function to check for all field with rule validation
   // and generate their errors on mount
@@ -136,11 +139,6 @@ export function useForm<T>(initialState: {name: string; rule: string}[]) {
 
   const [errors, setErrors] = useState<Error>({});
   const [isValid, setIsValid] = useState(false);
-  const [inputs, setInputs] = useState<InputProps<T>[]>([]);
-
-  useEffect(() => {
-    checkInputs();
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
@@ -154,8 +152,17 @@ export function useForm<T>(initialState: {name: string; rule: string}[]) {
     setIsValid(Object.keys(validateField({name, value, rule})).length === 0);
   };
 
+  const handleSubmit = (event: React.FormEvent) => {
+    checkInputs();
+    event.preventDefault();
+    if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
+      submitForm();
+      setIsValid(false);
+    }
+  };
   return {
     handleChange,
+    handleSubmit,
     values,
     errors,
     isValid,
