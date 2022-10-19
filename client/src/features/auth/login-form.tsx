@@ -25,7 +25,7 @@ export const LoginForm = () => {
   //
   const {values, errors, isValid, onChange, onSubmit} = useForm(initialState, handleSubmit);
 
-  const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
+  const [logUser] = useLogUserMutation();
 
   const pwdRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
@@ -33,27 +33,13 @@ export const LoginForm = () => {
     try {
       const {email, password} = values;
       await logUser({email, password}).unwrap();
-      showToast('success');
+      useToastMessage('Sign In succefully', 'success');
       navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
       err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
-      err.error ? showToast(err.error) : showToast(err.data?.message);
+      err.error ? useToastMessage(err.error, 'error') : useToastMessage(err.data?.message, 'error');
     }
-  }
-
-  function showToast(msg: unknown) {
-    toast.error(msg, {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-      toastId: 'successId',
-    });
   }
 
   return (
@@ -76,7 +62,7 @@ export const LoginForm = () => {
             />
 
             <InputField
-              reference={pwdRef}
+              //reference={pwdRef}
               label="Password"
               name="password"
               placeholder="Enter your password"
