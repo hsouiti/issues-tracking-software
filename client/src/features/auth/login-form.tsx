@@ -5,6 +5,7 @@ import {FiLogIn, FiEye, FiEyeOff} from 'react-icons/fi';
 import {BiLinkExternal, BiCheck} from 'react-icons/bi';
 
 import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {useLogUserMutation} from './api/authApi';
 
@@ -32,13 +33,27 @@ export const LoginForm = () => {
     try {
       const {email, password} = values;
       await logUser({email, password}).unwrap();
-      useToastMessage('Sign in successfully', 'success');
+      showToast('success');
       navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
-      err.error ? useToastMessage(err.error, 'error') : useToastMessage(err.data?.message, 'error');
       err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
+      err.error ? showToast(err.error) : showToast(err.data?.message);
     }
+  }
+
+  function showToast(msg: unknown) {
+    toast.error(msg, {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      toastId: 'successId',
+    });
   }
 
   return (
