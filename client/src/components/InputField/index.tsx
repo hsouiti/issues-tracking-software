@@ -14,6 +14,7 @@ interface TextFieldProps {
   error?: string;
   role?: string;
   textarea?: boolean;
+  reference?: HTMLInputElement | HTMLTextAreaElement;
 }
 /*
 // TODO: 
@@ -29,6 +30,7 @@ export const InputField = ({
   rule,
   role,
   textarea,
+  reference,
   ...rest
 }: TextFieldProps) => {
   const InputElement = textarea ? 'textarea' : 'input';
@@ -41,6 +43,7 @@ export const InputField = ({
           className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow placeholder:text-sm"
           role={role}
           data-rule={rule}
+          ref={reference}
           {...rest}
         />
 
