@@ -39,11 +39,6 @@ describe('Authentication Form:', () => {
       expect(getElement('button', /sign/i)).toBeInTheDocument();
       expect(getElement('button', /sign/i)).toBeDisabled();
     });
-
-    /*
-    // the email/password are required 
-    // Enable Sign Up button
-    */
   });
 
   describe('- User Interaction', () => {
@@ -74,13 +69,12 @@ describe('Authentication Form:', () => {
         </Router>
       );
 
-      // Diasbled => required fields are missing
+      // Diasbled Sign In Button => When required fields are missing
       await user.clear(getElement('textbox'));
       await user.clear(getElement('password'));
       expect(getElement('button', /sign/i)).toBeDisabled();
 
-      // Disable Sign Button if  required fields are invalid
-
+      // Disable Sign Button => required fields are invalid
       await user.type(getElement('textbox'), 'wrongemail');
       await user.type(getElement('password'), 'wrongpass');
       expect(getElement('button', /sign/i)).toBeDisabled();
@@ -93,14 +87,10 @@ describe('Authentication Form:', () => {
         </Router>
       );
 
-      // eslint-disable-next-line no-useless-escape
-      const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/g;
-      const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,30}$/g;
-
       await user.type(getElement('textbox'), 'wrongemail');
       await user.type(getElement('password'), 'wrongpassword');
       // eslint-disable-next-line testing-library/prefer-presence-queries
-      expect(screen.queryByRole('pwd-message')).toBeInTheDocument();
+      expect(screen.queryByRole('password-message')).toBeInTheDocument();
       // eslint-disable-next-line testing-library/prefer-presence-queries
       expect(screen.queryByRole('email-message')).toBeInTheDocument();
 
@@ -108,9 +98,32 @@ describe('Authentication Form:', () => {
       await user.type(getElement('textbox'), emailTest);
       await user.type(getElement('password'), passwordTest);
       // eslint-disable-next-line testing-library/prefer-presence-queries
-      expect(screen.queryByRole('pwd-message')).not.toBeInTheDocument();
+      expect(screen.queryByRole('password-message')).not.toBeInTheDocument();
       // eslint-disable-next-line testing-library/prefer-presence-queries
       expect(screen.queryByRole('email-message')).not.toBeInTheDocument();
+    });
+
+    it('Clicking Sign In && submit the login Form', async () => {
+      renderWithProviders(
+        <Router>
+          <LoginForm />
+        </Router>
+      );
+      const failureMessage = 'Invalid Credentails';
+      /*   const success = {
+        user: {
+          name: 'John',
+          email: 'john@gmail.com',
+          role: 'admin',
+        },
+        token: 'eyyhdfjdfd12dfd',
+      }; */
+
+      await user.type(getElement('textbox'), emailTest);
+      await user.type(getElement('password'), `${passwordTest}a`);
+
+      await user.click(getElement('message'));
+      expect(getElement('message')).toHaveTextContent(failureMessage);
     });
   });
 });
