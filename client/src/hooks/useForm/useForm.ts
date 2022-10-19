@@ -1,9 +1,16 @@
+import {getRandomValues} from 'crypto';
 import React, {useState, useEffect} from 'react';
 
+// TODO:
+// Refactor the code make it clean
+// test the hook
+// deploy as npm package
+//
 interface InputProps<T> {
   name: string;
   value: T;
   rule?: string;
+  entredPassword?: string;
 }
 
 interface Error {
@@ -27,42 +34,21 @@ interface IsPasswordType {
   [key: string]: string | boolean;
 }
 
-//https://react-hook-form.com/api/useform/register
-
-/* 
-// validaton rules 
-    isRequired
-    min
-    max
-    isEmail
-*/
-
-/*
-    <input {...register("firstName", { required: true, maxLength: 20 })} />
-    <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
-    <input type="number" {...register("age", { min: 18, max: 99 })} />
-*/
-
 const errorsMessages: {
   isRequired: string;
   isEmail: string;
   isPassword: string;
+  isConfirmPassword: string;
 } = {
   isRequired: 'is required',
   isEmail: 'You should enter a valid Email',
   isPassword: 'Min 6 characters | Uppercase | Lowercase | Number | Special character',
-  /*  isPassword: {
-    minLen: 'Min 6 characters',
-    uppercase: true,
-    lowercase: true,
-    number: true,
-    special: true,
-  }, */
+  isConfirmPassword: "Passwords didn't match",
 };
 
 let errors: Error = {};
 export function validateField<T>(input: InputProps<T>): Error {
-  const {name, value, rule} = input;
+  const {name, value, rule, entredPassword} = input;
 
   if (rule) {
     /*
@@ -97,8 +83,6 @@ export function validateField<T>(input: InputProps<T>): Error {
 
     // isPassword rule
     if (rule.trim().includes('isPassword')) {
-      console.log('errors message', errorsMessages['isPassword']);
-
       if (
         typeof value === 'string' &&
         (value.trim().length < 6 || !validatePassword(value.trim()))
@@ -106,6 +90,18 @@ export function validateField<T>(input: InputProps<T>): Error {
         errors = {
           ...errors,
           [name]: `${errorsMessages['isPassword']}`,
+        };
+      } else {
+        delete errors[`${name}`];
+      }
+    }
+
+    // isConfirmPassword rule
+    if (rule.trim().includes('isConfirmPassword') && entredPassword) {
+      if (typeof value === 'string' && value.trim() !== entredPassword.trim()) {
+        errors = {
+          ...errors,
+          [name]: `${errorsMessages['isConfirmPassword']}`,
         };
       } else {
         delete errors[`${name}`];
@@ -137,30 +133,6 @@ export function useForm<T>(
     });
   }
 
-  // validate form elements
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //ts-ignore
-  const validate = (...params: any) => {
-    console.log('here', params);
-    /* 
-      [  name", {
-      "required": true,
-      "min": 8}
-      ]
-    */
-  };
-
-  /*
-  <input 
-    onChange={onChange} // assign onChange event 
-    onBlur={onBlur} // assign onBlur event
-    name={name} // assign name prop
-    ref={ref} // assign ref prop
-  />
-  // same as above
-  <input {...register('firstName')} />
-  */
-
   // get InitialValues
   const getInitialValues = (initial: any[]) => {
     const inputss = {};
@@ -181,21 +153,28 @@ export function useForm<T>(
   const [errors, setErrors] = useState<Error>({});
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
       name,
       value,
       // access custom attribute 'data-rule' from event
       dataset: {rule},
     } = event.target;
-    console.log(event.target.dataset);
 
     setValues({...values, [name]: value});
-    setErrors(validateField({name, value, rule}));
+    setErrors(
+      validateField({
+        name,
+        value,
+        rule,
+        ...(name === 'confirmPassword' && {entredPassword: values['password']}),
+      })
+    );
+
     setIsValid(Object.keys(validateField({name, value, rule})).length === 0);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const onSubmit = (event: React.FormEvent) => {
     checkInputs();
     event.preventDefault();
     if (Object.keys(errors).length === 0 && Object.keys(values).length !== 0) {
@@ -203,10 +182,10 @@ export function useForm<T>(
       setIsValid(false);
     }
   };
+
   return {
-    handleChange,
-    handleSubmit,
-    validate,
+    onChange,
+    onSubmit,
     values,
     errors,
     isValid,
