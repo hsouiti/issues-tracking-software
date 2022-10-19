@@ -38,17 +38,10 @@ const InputField = ({label, styles, error, rule, role, textarea, ...rest}: TextF
 
         {error && (
           <p
-            role={role}
+            role={`${rest.name}-message`}
             className="w-full px-0 mt-2 text-pink-600 text-sm flex flex-wrap justify-start gap-x-4 gap-y-2"
           >
             {error}
-            {/*    {error.split('|').map((el) => {
-              return (
-                <span className="inline-block flex" key={el}>
-                  <BiCheck /> {el}
-                </span>
-              );
-            })} */}
           </p>
         )}
       </label>
