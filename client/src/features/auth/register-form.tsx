@@ -10,7 +10,7 @@ import {useLogUserMutation} from './api/authApi';
 import {ErrorType} from '../../types';
 import {useForm} from '../../hooks/useForm/useForm';
 
-import InputField from '@components/InputField';
+import {InputField} from '@components/InputField';
 
 const initialState = [
   {name: 'name', rule: 'isRequired'},

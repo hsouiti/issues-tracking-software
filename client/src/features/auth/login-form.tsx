@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 
 import {FiLogIn, FiEye, FiEyeOff} from 'react-icons/fi';
 import {BiLinkExternal, BiCheck} from 'react-icons/bi';
 
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
 import {useLogUserMutation} from './api/authApi';
 
 import {ErrorType} from '../../types';
 import {useForm} from '../../hooks/useForm/useForm';
-
-import InputField from '../../components/inputField';
+import {useToastMessage} from '../../hooks/useToastMessage';
+import {InputField} from '../../components/inputField';
 
 const initialState = [
   {name: 'email', rule: 'isEmail'},
@@ -27,35 +26,24 @@ export const LoginForm = () => {
 
   const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
+  const pwdRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+
   async function handleSubmit(): Promise<void> {
     try {
       const {email, password} = values;
       await logUser({email, password}).unwrap();
-      showToast('success');
+      useToastMessage('Sign in successfully', 'success');
       navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
+      err.error ? useToastMessage(err.error, 'error') : useToastMessage(err.data?.message, 'error');
       err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
-      err.error ? showToast(err.error) : showToast(err.data?.message);
     }
-  }
-
-  function showToast(msg: unknown) {
-    toast.error(msg, {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-      toastId: 'successId',
-    });
   }
 
   return (
     <div className="h-screen bg-white flex items-center bg-slate-100">
+      <div role="showmessage">error</div>
       <div className="mx-auto my-10 bg-white py-4 px-10 rounded-xl shadow shadow-slate-300 md:w-[400px] w-[80%]">
         <h1 className="text-3xl font-medium text-center my-4 mb-8">Sign In</h1>
 
@@ -73,6 +61,7 @@ export const LoginForm = () => {
             />
 
             <InputField
+              reference={pwdRef}
               label="Password"
               name="password"
               placeholder="Enter your password"
