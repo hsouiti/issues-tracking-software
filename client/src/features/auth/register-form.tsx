@@ -10,6 +10,8 @@ import {useLogUserMutation} from './api/authApi';
 import {ErrorType} from '../../types';
 import {useForm} from '../../hooks/useForm/useForm';
 
+import InputField from '@components/InputField';
+
 const initialState = [
   {name: 'name', rule: 'isRequired'},
   {name: 'email', rule: 'isEmail'},
@@ -21,13 +23,11 @@ export const RegisterForm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<any>(null);
   //
-  const {values, errors, isValid, handleChange, reset} = useForm(initialState);
+  const {values, errors, isValid, onChange} = useForm(initialState, handleSubmit);
 
   const [logUser, {isSuccess, isError, error}] = useLogUserMutation();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  async function handleSubmit(): Promise<void> {
     try {
       const {email, password} = values;
       await logUser({email, password}).unwrap();
@@ -35,14 +35,10 @@ export const RegisterForm = () => {
       navigate('/');
     } catch (error: unknown) {
       const err = error as ErrorType;
-      /* const {
-        data: {message},
-      } = error; */
-      //console.log('aysnc error', err.data.message);
-      console.log('aysnc error', err);
-      err.error ? setErrorMessage(err.error) : setErrorMessage(err.data.message);
+
+      err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
     }
-  };
+  }
 
   return (
     <>
@@ -53,89 +49,50 @@ export const RegisterForm = () => {
 
           <form action="" className="my-4">
             <div className="flex flex-col space-y-5">
-              <label htmlFor="name">
-                <p className="font-medium text-sm text-slate-700 pb-2">Full Name</p>
-                <input
-                  id="name"
-                  placeholder="Enter your name"
-                  type="text"
-                  name="name"
-                  value={values.name}
-                  data-rule="isRequired"
-                  onChange={handleChange}
-                  onBlur={handleChange}
-                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                />
-                {errors.name && (
-                  <p role="email-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
-                    {errors.name}
-                  </p>
-                )}
-              </label>
+              <InputField
+                label="Full Name"
+                name="name"
+                placeholder="Enter your Full Name"
+                type="text"
+                value={values.name}
+                rule="isRequired"
+                onChange={onChange}
+                error={errors.name ?? null}
+              />
 
-              <label htmlFor="email">
-                <p className="font-medium text-sm text-slate-700 pb-2">Email address</p>
-                <input
-                  id="email"
-                  placeholder="Enter email address"
-                  type="text"
-                  name="email"
-                  value={values.email}
-                  data-rule="isEmail"
-                  onChange={handleChange}
-                  onBlur={handleChange}
-                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                />
-                {errors.email && (
-                  <p role="email-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
-                    {errors.email}
-                  </p>
-                )}
-              </label>
+              <InputField
+                label="Email Address"
+                name="email"
+                placeholder="Enter your email"
+                type="email"
+                value={values.email}
+                rule="isEmail"
+                onChange={onChange}
+                error={errors.email ?? null}
+              />
 
-              <label htmlFor="password">
-                <p className="font-medium text-sm text-slate-700 pb-2">Password</p>
-                <input
-                  id="password"
-                  placeholder="Enter your password"
-                  name="password"
-                  type="password"
-                  role="password"
-                  value={values.password}
-                  data-rule="isPassword"
-                  onChange={handleChange}
-                  onBlur={handleChange}
-                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                />
+              <InputField
+                label="Password"
+                name="password"
+                placeholder="Enter your password"
+                type="password"
+                value={values.password}
+                rule="isPassword"
+                onChange={onChange}
+                error={errors.password ?? null}
+              />
 
-                {errors.password && (
-                  <p role="pwd-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
-                    {errors.password}
-                  </p>
-                )}
-              </label>
+              <InputField
+                label="Confirm Password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                type="password"
+                value={values.confirmpassword}
+                rule="isConfirmPassword"
+                onChange={onChange}
+                error={errors.confirmPassword ?? null}
+              />
 
-              <label htmlFor="confirmPassword">
-                <p className="font-medium text-sm text-slate-700 pb-2">Confirm password</p>
-                <input
-                  id="confirmPassword"
-                  placeholder="Enter your password"
-                  name="confirmPassword"
-                  type="password"
-                  role="confirmPassword"
-                  value={values.confirmPassword}
-                  data-rule="isPassword"
-                  onChange={handleChange}
-                  onBlur={handleChange}
-                  className="w-full py-2 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                />
-
-                {errors.confirmPassword && (
-                  <p role="pwd-message" className="w-full px-2 mt-2 text-pink-600 text-sm">
-                    {errors.confirmPassword}
-                  </p>
-                )}
-              </label>
               <button
                 onClick={handleSubmit}
                 disabled={!isValid}
