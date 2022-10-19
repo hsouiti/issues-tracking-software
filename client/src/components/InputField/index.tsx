@@ -22,7 +22,15 @@ interface TextFieldProps {
 // 
 */
 
-const InputField = ({label, styles, error, rule, role, textarea, ...rest}: TextFieldProps) => {
+export const InputField = ({
+  label,
+  styles,
+  error,
+  rule,
+  role,
+  textarea,
+  ...rest
+}: TextFieldProps) => {
   const InputElement = textarea ? 'textarea' : 'input';
   return (
     <div className="form__group" style={styles}>
@@ -48,5 +56,3 @@ const InputField = ({label, styles, error, rule, role, textarea, ...rest}: TextF
     </div>
   );
 };
-
-export default InputField;
