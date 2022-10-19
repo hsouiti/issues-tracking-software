@@ -1,9 +1,5 @@
-import {ToastContainer, toast, ToastContentProps} from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-interface MessageProps {
-  message?: string | undefined;
-  type?: string | undefined;
-}
 
 export const useToastMessage = (
   message: string | undefined,

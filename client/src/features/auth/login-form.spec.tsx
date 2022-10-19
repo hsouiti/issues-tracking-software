@@ -1,10 +1,12 @@
 import 'whatwg-fetch';
-import {render, screen} from '@testing-library/react';
+import {render, screen, renderHook, act} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {renderWithProviders} from '../../utils/test/test-utils';
 import {LoginForm} from './login-form';
 import {BrowserRouter as Router, Routes} from 'react-router-dom';
+import {rest} from 'msw';
+import {server} from '../../mocks/server';
 
 function getElement(role: string, name?: RegExp): HTMLElement {
   return name
@@ -110,20 +112,21 @@ describe('Authentication Form:', () => {
         </Router>
       );
       const failureMessage = 'Invalid Credentails';
-      /*   const success = {
-        user: {
-          name: 'John',
-          email: 'john@gmail.com',
-          role: 'admin',
-        },
-        token: 'eyyhdfjdfd12dfd',
-      }; */
 
+      const baseUrl = 'http://localhost:4500/api/v1';
+      server.use(
+        rest.post(`${baseUrl}/auth/login`, async (req, res, ctx) => {
+          return res(ctx.status(400), ctx.json('Invalid Credentails'));
+        })
+      );
+
+      // TODO: https://github.com/anaguerraabaroa/react-tdd-login-form/blob/master/src/auth/components/login-page/login-page.test.js
       await user.type(getElement('textbox'), emailTest);
       await user.type(getElement('password'), `${passwordTest}a`);
-
-      await user.click(getElement('message'));
-      expect(getElement('message')).toHaveTextContent(failureMessage);
+      await user.click(getElement('button', /sign/i));
+      //expect(screen.getByRole('showmessage')).toHaveTextContent('errorMessage');
+      // eslint-disable-next-line testing-library/prefer-presence-queries
+      expect(screen.getByRole('showmessage')).toBeInTheDocument();
     });
   });
 });
