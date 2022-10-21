@@ -35,7 +35,10 @@
   ],
   "baseUrl": ".",
   "paths": {
-    "@/*": ["./src/*"]
+    "@src/*": ["./src/*"],
+    "@components/*": ["./src/components/*"],
+    "@utils/*": ["./src/utils/*"],
+    "@hooks/*": ["./src/hooks/*"]
   },
   "references": [
     {

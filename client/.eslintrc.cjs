@@ -32,6 +32,7 @@ module.exports = {
         'max-len': 100,
       },
     ],
+    'react/display-name': 'off',
   },
   settings: {
     'import/resolver': {
