@@ -4,15 +4,15 @@ import {useNavigate, Link} from 'react-router-dom';
 import {FiLogIn, FiEye, FiEyeOff} from 'react-icons/fi';
 import {BiLinkExternal, BiCheck} from 'react-icons/bi';
 
-import {toast} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {useLogUserMutation} from './api/authApi';
-
 import {ErrorType} from '../../types';
-import {useForm} from '../../hooks/useForm/useForm';
+import {useLogUserMutation} from './api/authApi';
 import {useToastMessage} from '../../hooks/useToastMessage';
-import {InputField} from '../../components/inputField';
+import {useForm} from '../../hooks/useForm/useForm';
+
+import InputField from '../../components/inputField';
 
 const initialState = [
   {name: 'email', rule: 'isEmail'},
@@ -23,11 +23,12 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<any>(null);
   //
-  const {values, errors, isValid, onChange, onSubmit} = useForm(initialState, handleSubmit);
+  const {values, errors, isValid, onChange, onSubmit, resetField} = useForm(
+    initialState,
+    handleSubmit
+  );
 
   const [logUser] = useLogUserMutation();
-
-  const pwdRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   async function handleSubmit(): Promise<void> {
     try {
@@ -39,15 +40,14 @@ export const LoginForm = () => {
       const err = error as ErrorType;
       err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
       err.error ? useToastMessage(err.error, 'error') : useToastMessage(err.data?.message, 'error');
+      resetField('password');
     }
   }
 
   return (
     <div className="h-screen bg-white flex items-center bg-slate-100">
-      <div role="showmessage">error</div>
       <div className="mx-auto my-10 bg-white py-4 px-10 rounded-xl shadow shadow-slate-300 md:w-[400px] w-[80%]">
         <h1 className="text-3xl font-medium text-center my-4 mb-8">Sign In</h1>
-
         <form action="" className="my-4" onSubmit={onSubmit}>
           <div className="flex flex-col space-y-5">
             <InputField
@@ -62,7 +62,6 @@ export const LoginForm = () => {
             />
 
             <InputField
-              //reference={pwdRef}
               label="Password"
               name="password"
               placeholder="Enter your password"
