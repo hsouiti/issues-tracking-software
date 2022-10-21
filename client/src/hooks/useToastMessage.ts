@@ -7,7 +7,7 @@ export const useToastMessage = (
 ) => {
   toast(message, {
     position: toast.POSITION.TOP_CENTER,
-    autoClose: 2000,
+    autoClose: type === 'error' ? 5000 : 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

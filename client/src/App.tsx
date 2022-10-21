@@ -9,8 +9,8 @@ const Router = lazy(() => import('./routes/router'));
 const App = () => {
   return (
     <>
-      <ToastContainer />
       <BrowserRouter>
+        <ToastContainer />
         <Router />
       </BrowserRouter>
     </>
