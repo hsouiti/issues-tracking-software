@@ -133,18 +133,21 @@ export function useForm<T>(
     });
   }
 
+  const initialStatee = [
+    {name: 'name', rule: 'isRequired'},
+    {name: 'email', rule: 'isEmail'},
+    {name: 'password', rule: 'isPassword'},
+    {name: 'confirmPassword', rule: 'isConfirmPassword'},
+  ];
   // get InitialValues
-  const getInitialValues = (initial: any[]) => {
-    const inputss = {};
+  const getInitialValues = (initial: any[]): any => {
+    let values = {};
+    initial.map((el) => {
+      //console.log(el.name);
+      const {name} = el;
+      values = {...values, [name]: ''};
+    });
 
-    function reducer(previousValue: any, currentValue: any, index: any): any {
-      const {name: prevName} = previousValue;
-      const {name: curName} = currentValue;
-
-      return {[prevName]: '', [curName]: ''};
-    }
-
-    const values = initial.reduce(reducer);
     return values;
   };
 
@@ -192,5 +195,6 @@ export function useForm<T>(
     reset: () => {
       setValues(getInitialValues(initialState)), setIsValid(false);
     },
+    resetField: (name: string) => setValues({...values, [name]: ''}),
   };
 }
