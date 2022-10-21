@@ -14,7 +14,7 @@ export const handlers = [
       return res(ctx.status(400), ctx.json('Invalid Credentails'));
     }
 
-    /*  return res(
+    return res(
       ctx.delay(100),
       ctx.json({
         user: {
@@ -24,6 +24,6 @@ export const handlers = [
         },
         token,
       })
-    ); */
+    );
   }),
 ];
