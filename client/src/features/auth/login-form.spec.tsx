@@ -1,14 +1,16 @@
 import 'whatwg-fetch';
 import {render, screen, renderHook, act} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {ToastContainer, toast} from 'react-toastify';
 
 import {renderWithProviders} from '../../utils/test/test-utils';
 import {LoginForm} from './login-form';
 import {BrowserRouter as Router, Routes} from 'react-router-dom';
 import {rest} from 'msw';
 import {server} from '../../mocks/server';
+import InputField from '../../components/inputField';
 
-function getElement(role: string, name?: RegExp): HTMLElement {
+function getElement(role: string, name?: RegExp): HTMLInputElement {
   return name
     ? screen.getByRole(role, {
         name: name,
@@ -27,7 +29,7 @@ describe('Authentication Form:', () => {
     // contains text inputs (login / password)
     // contains login buttons & must be disabled
     */
-    it('must conatins elements : => inputs (email, password) & button (Login: disabled)', () => {
+    it('must conatins elements : inputs (email, password) & button (Login: disabled)', () => {
       // inputs
       renderWithProviders(
         <Router>
@@ -111,40 +113,18 @@ describe('Authentication Form:', () => {
           <LoginForm />
         </Router>
       );
-      const failureMessage = 'Invalid Credentails';
 
-      const baseUrl = 'http://localhost:4500/api/v1';
       server.use(
-        rest.post(`${baseUrl}/auth/login`, async (req, res, ctx) => {
-          return res(ctx.status(400), ctx.json('Invalid Credentails'));
+        rest.post(`/login`, async (req, res, ctx) => {
+          return res(ctx.status(400), ctx.json('Invalid Credentials'));
         })
       );
 
-      // TODO: https://github.com/anaguerraabaroa/react-tdd-login-form/blob/master/src/auth/components/login-page/login-page.test.js
       await user.type(getElement('textbox'), emailTest);
       await user.type(getElement('password'), `${passwordTest}a`);
       await user.click(getElement('button', /sign/i));
-      //expect(screen.getByRole('showmessage')).toHaveTextContent('errorMessage');
-      // eslint-disable-next-line testing-library/prefer-presence-queries
-      expect(screen.getByRole('showmessage')).toBeInTheDocument();
+      // expect(getElement('password').value).toBe('');
+      //expect(screen.getByText('Invalid Credentials')).toBeInTheDocument();
     });
   });
 });
-
-/*
-// ** user beahvior => type & submit ** //
-// disable submit button when the one of the inputs required is empty
-// ***** submitted with wrong data ****
-// show/hide error messages (blur event)
-
-
-/*
-// ***** submitted with valid data ****
-// - must disable the submit button while the form page
-     is fetching the data
-// - invalid credentials response, the form page must display
-//   the error message 
-// 
-// ** submition succeded ** //
-// Authorization
-*/
