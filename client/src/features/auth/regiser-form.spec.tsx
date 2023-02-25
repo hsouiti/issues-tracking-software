@@ -9,7 +9,7 @@ import {renderWithProviders} from '../../utils/test/test-utils';
 
 import {RegisterForm} from './register-form';
 
-import InputField from '../../components/inputField';
+import InputField from '../../components/oooinput-field';
 
 function getElement(role: string, name?: RegExp): HTMLInputElement {
   return name

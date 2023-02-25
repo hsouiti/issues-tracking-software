@@ -1,5 +1,5 @@
 import {getRandomValues} from 'crypto';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 // TODO:
 // Refactor the code make it clean
@@ -156,26 +156,29 @@ export function useForm<T>(
   const [errors, setErrors] = useState<Error>({});
   const [isValid, setIsValid] = useState(false);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {
-      name,
-      value,
-      // access custom attribute 'data-rule' from event
-      dataset: {rule},
-    } = event.target;
-
-    setValues({...values, [name]: value});
-    setErrors(
-      validateField({
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const {
         name,
         value,
-        rule,
-        ...(name === 'confirmPassword' && {entredPassword: values['password']}),
-      })
-    );
+        // access custom attribute 'data-rule' from event
+        dataset: {rule},
+      } = event.target;
 
-    setIsValid(Object.keys(validateField({name, value, rule})).length === 0);
-  };
+      setValues({...values, [name]: value});
+      setErrors(
+        validateField({
+          name,
+          value,
+          rule,
+          ...(name === 'confirmPassword' && {entredPassword: values['password']}),
+        })
+      );
+
+      setIsValid(Object.keys(validateField({name, value, rule})).length === 0);
+    },
+    [values]
+  );
 
   const onSubmit = (event: React.FormEvent) => {
     checkInputs();

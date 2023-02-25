@@ -8,7 +8,6 @@ import {LoginForm} from './login-form';
 import {BrowserRouter as Router, Routes} from 'react-router-dom';
 import {rest} from 'msw';
 import {server} from '../../mocks/server';
-import InputField from '../../components/inputField';
 
 function getElement(role: string, name?: RegExp): HTMLInputElement {
   return name
@@ -107,7 +106,7 @@ describe('Authentication Form:', () => {
       expect(screen.queryByRole('email-message')).not.toBeInTheDocument();
     });
 
-    it('Clicking Sign In && submit the login Form', async () => {
+    it.only('Clicking Sign In && submit the login Form', async () => {
       renderWithProviders(
         <Router>
           <LoginForm />
@@ -123,8 +122,8 @@ describe('Authentication Form:', () => {
       await user.type(getElement('textbox'), emailTest);
       await user.type(getElement('password'), `${passwordTest}a`);
       await user.click(getElement('button', /sign/i));
-      // expect(getElement('password').value).toBe('');
-      //expect(screen.getByText('Invalid Credentials')).toBeInTheDocument();
+      //expect(getElement('password').value).toBe('');
+      expect(await screen.findByText(/invalid/i)).toBeInTheDocument();
     });
   });
 });

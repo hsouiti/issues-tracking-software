@@ -8,22 +8,29 @@ import {BiLinkExternal} from 'react-icons/bi';
 import {useLogUserMutation} from './api/authApi';
 
 import {ErrorType} from '../../types';
-import {useForm} from '../../hooks/useForm/useForm';
+import {useForm} from '@hooks/useForm/useForm';
 
-import InputField from '../../components/inputField';
+import {InputField} from '@components/oooinput-field';
 
-const initialState = [
+/* const initialState = [
   {name: 'name', rule: 'isRequired'},
   {name: 'email', rule: 'isEmail'},
   {name: 'password', rule: 'isPassword'},
   {name: 'confirmPassword', rule: 'isConfirmPassword'},
 ];
-
+*/
 export const RegisterForm = () => {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState<any>(null);
   //
-  const {values, errors, isValid, onChange, onSubmit} = useForm(initialState, handleSubmit);
+  const {values, errors, isValid, onChange, onSubmit} = useForm(
+    [
+      {name: 'name', rule: 'isRequired'},
+      {name: 'email', rule: 'isEmail'},
+      {name: 'password', rule: 'isPassword'},
+      {name: 'confirmPassword', rule: 'isConfirmPassword'},
+    ],
+    handleSubmit
+  );
 
   const [logUser] = useLogUserMutation();
 
@@ -36,7 +43,7 @@ export const RegisterForm = () => {
     } catch (error: unknown) {
       const err = error as ErrorType;
 
-      err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
+      //err.error ? setErrorMessage(err.error) : setErrorMessage(err.data?.message);
     }
   }
 

@@ -1,8 +1,6 @@
 import {useLocation, Navigate, Outlet} from 'react-router-dom';
 import {useAuth} from '@/hooks/useAuth';
 
-import {SideBar} from '@layouts/side-bar';
-
 export interface Props {
   children?: JSX.Element;
 }
@@ -18,4 +16,4 @@ function RequireAuth({children}: Props) {
   );
 }
 
-export default RequireAuth;
+export default RequireAuth as React.ComponentType<any>;
