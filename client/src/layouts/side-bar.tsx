@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {FiUsers} from 'react-icons/fi';
+
 import {
   VscBug,
   VscFolderLibrary,
@@ -29,9 +30,9 @@ export const SideBar = () => {
               <li key={link.title} className="py-2 flex flex-row">
                 <NavLink
                   to={link.path}
+                  end
                   className="flex flex-1 items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white
                   hover:bg-gray-100 dark:hover:bg-gray-700"
-                  end
                 >
                   {link.icon}
                   <span className="ml-3">{link.title}</span>

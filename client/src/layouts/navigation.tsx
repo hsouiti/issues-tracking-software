@@ -3,16 +3,12 @@ import {NavLink} from 'react-router-dom';
 export const Navigation = () => {
   const routes = [
     {
-      path: '/',
-      name: 'Home',
+      path: '/login',
+      name: 'Login',
     },
     {
-      path: '/users',
-      name: 'Users',
-    },
-    {
-      path: '/projects',
-      name: 'Projects',
+      path: '/register',
+      name: 'Register',
     },
   ];
 
