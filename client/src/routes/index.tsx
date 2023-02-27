@@ -1,40 +1,29 @@
 import {lazy, Suspense} from 'react';
-import {BrowserRouter, createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 import '@styles/index.css';
+
+// Loading
+import {Loading} from '@components/loading';
 // pages
-/* 
+
 import Dashboard from '@pages/dashboard';
 import Index from '@pages/index';
 import Users from '@pages/users';
 import Projects from '@pages/projects';
 import Issues from '@pages/issues';
 import ErrorPage from '@pages/error-page';
-import Login from '@pages/login';
 import Register from '@pages/register';
-import RequireAuth from '@pages/requireAuth'; */
-
-import {Loading} from '@components/loading';
-// pages
-const Dashboard = lazy(() => import('@pages/dashboard'));
-const Index = lazy(() => import('@pages/index'));
-const Users = lazy(() => import('@pages/users'));
-const Projects = lazy(() => import('@pages/projects'));
-const Issues = lazy(() => import('@pages/issues'));
-const ErrorPage = lazy(() => import('@pages/error-page'));
-const Register = lazy(() => import('@pages/register'));
-const RequireAuth = lazy(() => import('@pages/requireAuth'));
-const Login = lazy(() => import('@pages/login'));
+import RequireAuth from '@pages/requireAuth';
+import Login from '@pages/login';
 
 const routes = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback={<Loading />}>
-        <RequireAuth>
-          <Index />
-        </RequireAuth>
-      </Suspense>
+      <RequireAuth>
+        <Index />
+      </RequireAuth>
     ),
     errorElement: <ErrorPage />,
     children: [
@@ -43,35 +32,22 @@ const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: (
-              <Suspense fallback={<Loading />}>
-                <Dashboard />
-              </Suspense>
-            ),
+            element: <Dashboard />,
           },
           {
             path: 'projects',
-            element: (
-              <Suspense fallback={<Loading />}>
-                <Projects />
-              </Suspense>
-            ),
+            element: <Projects />,
+            /*  loader: (data) => console.log('laoder data ', data), */
           },
           {
             path: 'issues',
-            element: (
-              <Suspense fallback={<Loading />}>
-                <Issues />
-              </Suspense>
-            ),
+            element: <Issues />,
+            loader: (data) => console.log('laoder data ', data),
           },
           {
             path: 'users',
-            element: (
-              <Suspense fallback={<Loading />}>
-                <Users />
-              </Suspense>
-            ),
+            element: <Users />,
+            loader: (data) => console.log('laoder data ', data),
           },
         ],
       },
@@ -79,19 +55,11 @@ const routes = createBrowserRouter([
   },
   {
     path: '/login',
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Login />,
-      </Suspense>
-    ),
+    element: <Login />,
   },
   {
     path: '/register',
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Register />
-      </Suspense>
-    ),
+    element: <Register />,
   },
 ]);
 
