@@ -1,12 +1,11 @@
-import {lazy, Suspense} from 'react';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
 
 import '@styles/index.css';
 
 // Loading
 import {Loading} from '@components/loading';
-// pages
 
+// pages
 import Dashboard from '@pages/dashboard';
 import Index from '@pages/index';
 import Users from '@pages/users';
@@ -28,7 +27,6 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        // TODO: render the route error inside the root outlet
         errorElement: <ErrorPage />,
         children: [
           {
@@ -38,34 +36,37 @@ const routes = createBrowserRouter([
           {
             path: 'projects',
             element: <Projects />,
-            /*  loader: (data) => console.log('laoder data ', data), */
+            /* loader: () => {
+              throw new Response('Bad Request', {
+                statusText: 'message error',
+                status: 400,
+              });
+            }, */
           },
           {
             path: 'issues',
             element: <Issues />,
-            //loader: (data) => console.log('laoder data ', data),
           },
           {
             path: 'users',
             element: <Users />,
-            //loader: (data) => console.log('laoder data ', data),
           },
         ],
       },
     ],
   },
   {
-    path: '/login',
+    path: 'login',
     element: <Login />,
   },
   {
-    path: '/register',
+    path: 'register',
     element: <Register />,
   },
 ]);
 
 function Router() {
-  return <RouterProvider router={routes} />;
+  return <RouterProvider router={routes} fallbackElement={<Loading />} />;
 }
 
 export default Router;
