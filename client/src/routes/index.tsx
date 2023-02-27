@@ -28,7 +28,8 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        errorElement: <h1>Error</h1>,
+        // TODO: render the route error inside the root outlet
+        errorElement: <ErrorPage />,
         children: [
           {
             index: true,
@@ -42,12 +43,12 @@ const routes = createBrowserRouter([
           {
             path: 'issues',
             element: <Issues />,
-            loader: (data) => console.log('laoder data ', data),
+            //loader: (data) => console.log('laoder data ', data),
           },
           {
             path: 'users',
             element: <Users />,
-            loader: (data) => console.log('laoder data ', data),
+            //loader: (data) => console.log('laoder data ', data),
           },
         ],
       },
