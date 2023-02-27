@@ -16,7 +16,7 @@ export const generateTokenPayload = async (user: IUserModel): Promise<DecodedInp
 export const generateJWT = async (payload: DecodedInput): Promise<string> => {
   return jwt.sign(payload, config.JWT_TOKEN_SECRET!, {
     // expiresIn: config.JWT_TOKEN_TIME,
-    expiresIn: '30s',
+    expiresIn: '300s',
   });
 };
 
